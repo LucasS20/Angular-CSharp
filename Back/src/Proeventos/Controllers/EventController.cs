@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Proeventos.Data;
 using Proeventos.Models;
 
 namespace Proeventos.Controllers;
@@ -7,44 +8,23 @@ namespace Proeventos.Controllers;
 [Route("api/[controller]")]
 public class EventController : ControllerBase
 {
-    private IEnumerable<Evento> _event = new[]
-    {
-        new Evento()
-        {
-            EventoId = 1,
-            Theme = "Angular and .Net5",
-            Local = "Belo Horizonte",
-            Lote = "1º Lote",
-            NumberOfPeoples = 250,
-            Data = DateTime.Now.AddDays(2).ToString(),
-            imgURL = "img.png"
-        },
-        new Evento()
-        {
-            EventoId = 2,
-            Theme = "Angular e novidades",
-            Local = "Sao paulo",
-            Lote = "2º Lote",
-            NumberOfPeoples = 2520,
-            Data = DateTime.Now.AddDays(3).ToString(),
-            imgURL = "foto.png"
-        }
-    };
+    private readonly DataContext _context;
 
-    public EventController()
+    public EventController(DataContext context)
     {
+        _context = context;
     }
 
     [HttpGet(Name = "GetEvent")]
     public IEnumerable<Evento> Get()
     {
-        return _event;
+        return _context.Eventos.ToList();
     }
 
     [HttpGet("{id}")]
-    public IEnumerable<Evento> GetById(int id)
+    public Evento GetById(int id)
     {
-        return _event.Where(evento => evento.EventoId == id);
+        return _context.Eventos.Find(id);
     }
 
     [HttpPost]
