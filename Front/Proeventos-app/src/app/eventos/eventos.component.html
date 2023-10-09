@@ -1,0 +1,46 @@
+<div class="form-inline ">
+    <div class="form-group mb-2 ">
+        <input type="text" class="form-control-sm mr-2" placeholder="Buscar" [(ngModel)]="listFilter">
+    </div>
+</div>
+
+<H3>{{listFilter}}</H3>
+<table class="table table-striped">
+    <thead class="bg-dark align-middle">
+    <tr>
+        <th>
+            <button class="btn btn-outline-dark btn-sm" (click)="changeState()">{{showImage ? "Hide" : "Show"}}</button>
+        </th>
+        <th>#</th>
+        <th>Theme</th>
+        <th>Local</th>
+        <th>Data</th>
+        <th>People Amount</th>
+        <th>Lot</th>
+        <th>Options</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="events && events.length" class=" align-middle">
+
+    <tr
+            *ngFor="let evento of filteredEvents">
+        <td><img [collapse]=!showImage [isAnimated]="true" src="/assets/{{evento.imgURL}}" [style.width.px]="widthImage"
+                 [style.margin.px]="margin" alt=""></td>
+        <td>{{evento.eventoId}}</td>
+        <td>{{evento.theme}}</td>
+        <td>{{evento.local}}</td>
+        <td>{{evento.data}}</td>
+        <td>{{evento.numberOfPeoples}}</td>
+        <td>{{evento.lote}}</td>
+        <td>
+            <button type="button" class="btn btn-outline-info btn-sm rm-3" style="margin-right: 3px"> Edit</button>
+            <button type="button" class="btn btn-outline-danger btn-sm "> Delete</button>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot *ngIf="! events">
+    <tr>
+        <td class="text-center">EVENTS NOT FOUND</td>
+    </tr>
+    </tfoot>
+</table>
