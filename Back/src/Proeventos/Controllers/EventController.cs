@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Proeventos.Data;
 using ProEventos.Domain;
 
 namespace Proeventos.Controllers;
@@ -8,9 +7,9 @@ namespace Proeventos.Controllers;
 [Route("api/[controller]")]
 public class EventController : ControllerBase
 {
-    private readonly DataContext _context;
+    private readonly ProEventos.Domain.ProEventosContext _context;
 
-    public EventController(DataContext context)
+    public EventController(ProEventos.Domain.ProEventosContext context)
     {
         _context = context;
     }
@@ -18,13 +17,13 @@ public class EventController : ControllerBase
     [HttpGet(Name = "GetEvent")]
     public IEnumerable<Event> Get()
     {
-        return _context.Eventos.ToList();
+        return _context.Events.ToList();
     }
 
     [HttpGet("{id}")]
     public Event GetById(int id)
     {
-        return _context.Eventos.Find(id);
+        return _context.Events.Find(id);
     }
 
     [HttpPost]

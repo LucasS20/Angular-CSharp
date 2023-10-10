@@ -1,1 +1,10 @@
 ﻿.idea
+/Back/src/Proeventos/obj/
+/Back/src/Proeventos/bin/
+/Back/src/ProEventos.Application/obj/
+/Back/src/Proeventos/.idea/
+/Back/src/ProEventos.Application/bin/
+/Back/src/ProEventos.Domain/bin/
+/Back/src/ProEventos.Domain/obj/
+/Back/src/ProEventos.Persistence/bin/
+/Back/src/ProEventos.Persistence/obj/
