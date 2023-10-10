@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xDi6F5ksFbF/O8nAO5w8iNdzb9ByVXs2xr7ZSAloUGEkaGH0Sf+5tIh4GgedP0oHlK9OFRwN0TvTncQmvKwt3Q==",
+  "dgSpecHash": "4Ixag/oTn35OsQk022FUohfHgjd1Aex5/ietr0Gtjc21116/XDa3whCpDvJsB3yXR342AzQKbCik8ch9iGB8kQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\lucas.santos\\Desktop\\Cursos\\Angular-.net\\Back\\src\\ProEventos\\Proeventos.csproj",
+  "projectFilePath": "C:\\Users\\lucas.santos\\Desktop\\Cursos\\Angular-.net\\Back\\src\\Proeventos\\Proeventos.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lucas.santos\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\lucas.santos\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
@@ -12,9 +12,9 @@
     "C:\\Users\\lucas.santos\\.nuget\\packages\\microsoft.data.sqlclient\\5.1.1\\microsoft.data.sqlclient.5.1.1.nupkg.sha512",
     "C:\\Users\\lucas.santos\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\5.1.0\\microsoft.data.sqlclient.sni.runtime.5.1.0.nupkg.sha512",
     "C:\\Users\\lucas.santos\\.nuget\\packages\\microsoft.data.sqlite.core\\7.0.11\\microsoft.data.sqlite.core.7.0.11.nupkg.sha512",
-    "C:\\Users\\lucas.santos\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.12\\microsoft.entityframeworkcore.7.0.12.nupkg.sha512",
-    "C:\\Users\\lucas.santos\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.12\\microsoft.entityframeworkcore.abstractions.7.0.12.nupkg.sha512",
-    "C:\\Users\\lucas.santos\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.12\\microsoft.entityframeworkcore.analyzers.7.0.12.nupkg.sha512",
+    "C:\\Users\\lucas.santos\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.11\\microsoft.entityframeworkcore.7.0.11.nupkg.sha512",
+    "C:\\Users\\lucas.santos\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.11\\microsoft.entityframeworkcore.abstractions.7.0.11.nupkg.sha512",
+    "C:\\Users\\lucas.santos\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.11\\microsoft.entityframeworkcore.analyzers.7.0.11.nupkg.sha512",
     "C:\\Users\\lucas.santos\\.nuget\\packages\\microsoft.entityframeworkcore.design\\7.0.11\\microsoft.entityframeworkcore.design.7.0.11.nupkg.sha512",
     "C:\\Users\\lucas.santos\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\7.0.11\\microsoft.entityframeworkcore.relational.7.0.11.nupkg.sha512",
     "C:\\Users\\lucas.santos\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite\\7.0.11\\microsoft.entityframeworkcore.sqlite.7.0.11.nupkg.sha512",
