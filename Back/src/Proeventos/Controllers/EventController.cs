@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Proeventos.Data;
-using Proeventos.Models;
+using ProEventos.Domain;
 
 namespace Proeventos.Controllers;
 
@@ -16,13 +16,13 @@ public class EventController : ControllerBase
     }
 
     [HttpGet(Name = "GetEvent")]
-    public IEnumerable<Evento> Get()
+    public IEnumerable<Event> Get()
     {
         return _context.Eventos.ToList();
     }
 
     [HttpGet("{id}")]
-    public Evento GetById(int id)
+    public Event GetById(int id)
     {
         return _context.Eventos.Find(id);
     }

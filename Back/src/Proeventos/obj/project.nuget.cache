@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XAMMv8Oyci3eBz4NWVFMmlVob3TZ2skT4DSPAH2FOMqbgMkYR9Jg1pXxDjhmnm1/Czsnf5i6dpLH3r3zMwY6tA==",
+  "dgSpecHash": "BMkduQSyhUBSZjfoMTSHmy2uXujpAgLypZqtnKfvqCeEGB+ZkkNS0Ft9W1WqcXUPQqfwZqNyHeNhSjJwMD7ttg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\lucas.santos\\Desktop\\Cursos\\FullStack\\Back\\src\\Proeventos\\Proeventos.csproj",
+  "projectFilePath": "C:\\Users\\lucas.santos\\Desktop\\Cursos\\Angular-.net\\Back\\src\\ProEventos\\Proeventos.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lucas.santos\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\lucas.santos\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
