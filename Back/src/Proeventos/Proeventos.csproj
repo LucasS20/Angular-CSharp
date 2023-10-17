@@ -24,4 +24,55 @@
     <ProjectReference Include="..\ProEventos.Application\ProEventos.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="obj\Debug\net6.0\apphost.exe" />
+    <Content Include="obj\Debug\net6.0\Proeventos.AssemblyInfoInputs.cache" />
+    <Content Include="obj\Debug\net6.0\Proeventos.assets.cache" />
+    <Content Include="obj\Debug\net6.0\Proeventos.csproj.AssemblyReference.cache" />
+    <Content Include="obj\Debug\net6.0\Proeventos.csproj.CopyComplete" />
+    <Content Include="obj\Debug\net6.0\Proeventos.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Debug\net6.0\Proeventos.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\net6.0\Proeventos.dll" />
+    <Content Include="obj\Debug\net6.0\Proeventos.GeneratedMSBuildEditorConfig.editorconfig" />
+    <Content Include="obj\Debug\net6.0\Proeventos.genruntimeconfig.cache" />
+    <Content Include="obj\Debug\net6.0\Proeventos.MvcApplicationPartsAssemblyInfo.cache" />
+    <Content Include="obj\Debug\net6.0\Proeventos.pdb" />
+    <Content Include="obj\Debug\net6.0\refint\Proeventos.dll" />
+    <Content Include="obj\Debug\net6.0\ref\Proeventos.dll" />
+    <Content Include="obj\Debug\net6.0\staticwebassets.build.json" />
+    <Content Include="obj\Proeventos.csproj.EntityFrameworkCore.targets" />
+    <Content Include="obj\Proeventos.csproj.nuget.dgspec.json" />
+    <Content Include="obj\Proeventos.csproj.nuget.g.props" />
+    <Content Include="obj\Proeventos.csproj.nuget.g.targets" />
+    <Content Include="obj\project.assets.json" />
+    <Content Include="obj\project.nuget.cache" />
+    <Content Include="obj\project.packagespec.json" />
+    <Content Include="obj\rider.project.model.nuget.info" />
+    <Content Include="obj\rider.project.restore.info" />
+    <Content Include="obj\staticwebassets.pack.sentinel" />
+    <Content Remove="obj\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Debug\net6.0\Proeventos.AssemblyInfo.cs" />
+    <Compile Include="obj\Debug\net6.0\Proeventos.GlobalUsings.g.cs" />
+    <Compile Include="obj\Debug\net6.0\Proeventos.MvcApplicationPartsAssemblyInfo.cs" />
+    <Compile Remove="obj\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="obj\Debug\net6.0\staticwebassets\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="obj\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="obj\**" />
+    <None Remove="Proeventos.db-wal" />
+    <None Remove="Proeventos.db" />
+  </ItemGroup>
+
 </Project>

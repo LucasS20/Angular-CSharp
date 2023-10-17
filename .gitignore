@@ -8,3 +8,7 @@
 /Back/src/ProEventos.Domain/obj/
 /Back/src/ProEventos.Persistence/bin/
 /Back/src/ProEventos.Persistence/obj/
+/Back/src/obj/
+/Back/src/Proeventos/Proeventos.db
+/Back/src/Proeventos/Proeventos.db-shm
+/Back/src/Proeventos/Proeventos.db-wal

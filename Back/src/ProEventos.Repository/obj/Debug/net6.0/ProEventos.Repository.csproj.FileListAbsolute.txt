@@ -1,0 +1,17 @@
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\bin\Debug\net6.0\ProEventos.Repository.deps.json
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\bin\Debug\net6.0\ProEventos.Repository.runtimeconfig.json
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\bin\Debug\net6.0\ProEventos.Repository.dll
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\bin\Debug\net6.0\ProEventos.Repository.pdb
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\bin\Debug\net6.0\ProEventos.Domain.dll
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\bin\Debug\net6.0\ProEventos.Domain.pdb
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\obj\Debug\net6.0\ProEventos.Repository.csproj.AssemblyReference.cache
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\obj\Debug\net6.0\ProEventos.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\obj\Debug\net6.0\ProEventos.Repository.AssemblyInfoInputs.cache
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\obj\Debug\net6.0\ProEventos.Repository.AssemblyInfo.cs
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\obj\Debug\net6.0\ProEventos.Repository.csproj.CoreCompileInputs.cache
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\obj\Debug\net6.0\ProEventos.Repository.csproj.CopyComplete
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\obj\Debug\net6.0\ProEventos.Repository.dll
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\obj\Debug\net6.0\refint\ProEventos.Repository.dll
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\obj\Debug\net6.0\ProEventos.Repository.pdb
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\obj\Debug\net6.0\ProEventos.Repository.genruntimeconfig.cache
+C:\Users\lucas.santos\Desktop\Cursos\Angular-.net\Back\src\ProEventos.Repository\obj\Debug\net6.0\ref\ProEventos.Repository.dll
