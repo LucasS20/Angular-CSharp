@@ -8,6 +8,6 @@ public class Speaker
     public string ImageURL { get; set; }
     public string phone { get; set; }
     public string email { get; set; }
-    public IEnumerable<SocialMedia>? SocialMedias { get; set; }
+    public IEnumerable<SocialMedia> SocialMedias { get; set; }
     public IEnumerable<EventSpeaker> EventSpeakers { get; set; }
 }

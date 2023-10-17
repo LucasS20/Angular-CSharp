@@ -1,0 +1,27 @@
+﻿{
+  "id": 1,
+  "local": "BH-ehnois",
+  "date": "2023-10-16T19:13:31.364",
+  "theme": "Angular",
+  "numberOfPeoples": 250,
+  "imgURL": "cruzeiro.png",
+  "phone": "string",
+  "email": "string@gmail.com",
+  "lots": [
+    {
+      "name": "string",
+      "price": 0,
+      "startDate": "2023-10-16T19:53:59.602Z",
+      "endDate": "2023-10-16T19:53:59.602Z",
+      "quantidade": 0,
+      "eventId": 1
+    }
+  ],
+  "socialMedias": [
+    {
+      "name": "twitter",
+      "url": "https://twitter.com"
+    }
+  ],
+  "speakersEvent": []
+}

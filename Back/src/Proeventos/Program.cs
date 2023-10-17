@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using ProEventos.Domain;
+using ProEventos.Application;
+using ProEventos.Application.Interfaces;
+using ProEventos.Persistence.Contexto;
+using ProEventos.Persistence.Interfaces;
+using ProEventos.Persistence.Persist;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,9 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IGeneralPersist, GeneralPersist>();
+builder.Services.AddScoped<IEventPersist, EventPersist>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ProEventos.Domain.ProEventosContext>(
+builder.Services.AddDbContext<ProEventosContext>(
     context => context.UseSqlite((builder.Configuration.GetConnectionString("Default")))
 );
 builder.Services.AddCors();
@@ -26,9 +33,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-app.UseCors(cors => cors.AllowAnyHeader().
-    AllowAnyMethod().
-    AllowAnyOrigin());
+app.UseCors(cors => cors.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.MapControllers();
 
