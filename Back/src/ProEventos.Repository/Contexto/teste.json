@@ -1,0 +1,28 @@
+﻿{
+  "local": "string",
+  "date": "2023-10-17T18:06:43.195Z",
+  "theme": "string",
+  "numberOfPeoples": 0,
+  "imgURL": "string",
+  "phone": "string",
+  "email": "string",
+  "lots": [
+    {
+      "name": "string",
+      "price": 0,
+      "startDate": "2023-10-17T18:06:43.195Z",
+      "endDate": "2023-10-17T18:06:43.196Z",
+      "quantidade": 0
+    }
+  ],
+  "socialMedias": [
+    {
+      "name": "string",
+      "url": "string"
+    }
+  ],
+  "speakersEvent": [],
+  "eventSpeakers":[]
+
+}
+

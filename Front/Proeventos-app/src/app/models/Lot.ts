@@ -1,8 +1,9 @@
 export interface Lot {
-  Id: number;
-  Price: number;
-  StartDate?: Date;
-  EndDate?: Date;
-  Quantidade: number;
-  EventId: number;
+  id: number;
+  name: string;
+  price: number;
+  startdate?: Date;
+  enddate?: Date;
+  quantidade: number;
+  eventid: number;
 }

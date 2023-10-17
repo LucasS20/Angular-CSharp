@@ -9,6 +9,6 @@ export interface Speaker {
   ImageURL: string;
   phone: string;
   email: string;
-  SocialMedias: SocialMedia;
+  SocialMedias: SocialMedia[];
   EventSpeakers: EventSpeaker;
 }

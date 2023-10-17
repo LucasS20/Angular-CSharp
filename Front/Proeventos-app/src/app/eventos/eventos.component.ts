@@ -1,51 +1,56 @@
-import {Component} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {Component, OnInit} from '@angular/core';
+import {EventService} from "../services/event.service";
+import {Evento} from "../models/Evento";
 
 
 @Component({
-    selector: 'app-eventos',
-    templateUrl: './eventos.component.html',
-    styleUrls: ['./eventos.component.scss']
+  selector: 'app-eventos',
+  templateUrl: './eventos.component.html',
+  styleUrls: ['./eventos.component.scss']
 })
-export class EventosComponent {
-    public events = this.getEvents();
-    public widthImage: number = 50;
-    public margin: number = 10;
-    public showImage: boolean = true;
-    public filteredEvents: any = [];
-    private _listFilter: string = '';
+export class EventosComponent implements OnInit {
+  events: Evento[] = []
+  widthImage: number = 50;
+  margin: number = 10;
+  showImage: boolean = true;
+  filteredEvents: Evento[] = [];
+   _listFilter: string = '';
 
-    constructor(private http: HttpClient) {
+  constructor(private service: EventService) {
 
-    }
+  }
 
-    get listFilter() {
-        return this._listFilter;
-    }
+  public get listFilter() {
+    return this._listFilter;
+  }
 
-    set listFilter(value: string) {
-        this._listFilter = value;
-        value = value.toLowerCase();
-        this.filteredEvents = this._listFilter ? this.events.filter((e: any) => e.theme.toLowerCase().includes(value) || e.local.toLowerCase().includes(value)) : this.events;
-    }
+  public set listFilter(value: string) {
+    this._listFilter = value;
+    value = value.toLowerCase();
+    this.filteredEvents = this._listFilter ? this.events.filter((e: Evento) => e.theme.toLowerCase().includes(value) || e.local.toLowerCase().includes(value)) : this.events;
+  }
 
-    ngOnInit(): void {
-        this.getEvents()
-    }
+  public ngOnInit(): void {
+    this.getEvents()
+  }
 
-    public getEvents(): any {
-        this.http.get("https://localhost:7109/api/event").subscribe(
-            (response: any) => {
-                this.events = response;
-                this.filteredEvents = response;
-            },
-            (error: any) => console.log(error),
-        );
-    }
+  public getEvents(): void {
+    const observer = {
+      next: (_events: Evento[]) => {
+        this.events = _events;
+        this.filteredEvents = _events;
+      },
+      error: (error: any) => {
+        console.log(error)
+      },
+      complete: () => {
+      }
+    };
+    this.service.getEvents().subscribe(observer)
+  }
 
-    public changeState() {
-        this.showImage = !this.showImage;
-    }
-
+  public changeState() {
+    this.showImage = !this.showImage;
+  }
 
 }
