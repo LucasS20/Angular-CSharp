@@ -25,7 +25,7 @@ export class EventosComponent implements OnInit {
               private toastrService: ToastrService,
               private spinner: NgxSpinnerService) {
   }
-
+//TODO refactor
   public get listFilter() {
     return this._listFilter;
   }
