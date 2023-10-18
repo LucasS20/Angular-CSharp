@@ -1,3 +1,4 @@
+<app-titulo [content]="'Eventos'" ></app-titulo>
 <div class="form-inline ">
   <div class="form-group mb-2 ">
     <input type="text" class="form-control-sm mr-2" placeholder="Buscar" [(ngModel)]="listFilter">
@@ -27,7 +28,8 @@
   <tr *ngFor="let evento of filteredEvents">
     <td>
 
-      <img [collapse]=!showImage [isAnimated]="true" src="/assets/{{evento.imgURL}}" [style.width.px]="widthImage" [style.margin.px]="margin" alt="">
+      <img [collapse]=!showImage [isAnimated]="true" src="/assets/{{evento.imgURL}}" [style.width.px]="widthImage"
+           [style.margin.px]="margin" alt="">
     </td>
     <td>{{evento.id}}</td>
     <td>{{evento.theme}}</td>
@@ -36,7 +38,8 @@
     <td>{{evento.numberOfPeoples}}</td>
     <td>1</td>
     <td>
-      <button type="button" class="btn btn-outline-info btn-sm rm-3" style="margin-right: 3px" tooltip="Edit" (click)="openModal(template)"><i
+      <button type="button" class="btn btn-outline-info btn-sm rm-3" style="margin-right: 3px" tooltip="Edit"
+              (click)="openModal(template)"><i
         class=" fa fa-edit
       "></i></button>
       <button type="button" class="btn btn-outline-danger btn-sm " tooltip="Delete" (click)="openModal(template)"><i

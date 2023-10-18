@@ -9,5 +9,4 @@ export class NavBarComponent {
   isCollapsed = true;
   protected readonly confirm = confirm;
 
-
 }
