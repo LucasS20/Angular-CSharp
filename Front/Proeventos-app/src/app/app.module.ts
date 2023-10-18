@@ -7,7 +7,7 @@ import {EventosComponent} from './components/eventos/eventos.component';
 import {PalestrantesComponent} from './components/palestrantes/palestrantes.component';
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NavBarComponent} from './components/nav-bar/nav-bar.component';
+import {NavBarComponent} from './shared/nav-bar/nav-bar.component';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
 import {FormsModule} from "@angular/forms";
 import {EventService} from "./services/event.service";
