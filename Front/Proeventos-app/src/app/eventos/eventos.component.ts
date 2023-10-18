@@ -1,6 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {EventService} from "../services/event.service";
 import {Evento} from "../models/Evento";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {ToastrService} from "ngx-toastr";
+import {NgxSpinnerService} from "ngx-spinner";
 
 
 @Component({
@@ -9,15 +12,18 @@ import {Evento} from "../models/Evento";
   styleUrls: ['./eventos.component.scss']
 })
 export class EventosComponent implements OnInit {
+  modalRef?: BsModalRef;
   events: Evento[] = []
   widthImage: number = 50;
   margin: number = 10;
   showImage: boolean = true;
   filteredEvents: Evento[] = [];
-   _listFilter: string = '';
+  _listFilter: string = '';
 
-  constructor(private service: EventService) {
-
+  constructor(private service: EventService,
+              private modalService: BsModalService,
+              private toastrService: ToastrService,
+              private spinner: NgxSpinnerService) {
   }
 
   public get listFilter() {
@@ -31,6 +37,12 @@ export class EventosComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.spinner.show();
+
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 5000);
+
     this.getEvents()
   }
 
@@ -52,5 +64,20 @@ export class EventosComponent implements OnInit {
   public changeState() {
     this.showImage = !this.showImage;
   }
+
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {
+    this.toastrService.success("Operação realizada com sucesso");
+    this.modalRef?.hide();
+  }
+
+  decline(): void {
+    this.modalRef?.hide();
+  }
+
 
 }

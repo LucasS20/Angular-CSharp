@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -12,8 +12,12 @@ import {CollapseModule} from 'ngx-bootstrap/collapse';
 import {FormsModule} from "@angular/forms";
 import {EventService} from "./services/event.service";
 import {NgOptimizedImage} from "@angular/common";
-import { DateFormatPipe } from './helpers/dateFormat.pipe';
-
+import {DateFormatPipe} from './helpers/dateFormat.pipe';
+import {TooltipModule} from 'ngx-bootstrap/tooltip';
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import {ModalModule} from 'ngx-bootstrap/modal';
+import {ToastrModule} from 'ngx-toastr';
+import {NgxSpinnerModule} from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -21,7 +25,8 @@ import { DateFormatPipe } from './helpers/dateFormat.pipe';
     EventosComponent,
     PalestrantesComponent,
     NavBarComponent,
-    DateFormatPipe
+    DateFormatPipe,
+
   ],
   imports: [
     BrowserModule,
@@ -30,10 +35,20 @@ import { DateFormatPipe } from './helpers/dateFormat.pipe';
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
     FormsModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    TooltipModule,
+    BsDropdownModule,
+    ModalModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      progressBar: true,
+    }),
+    NgxSpinnerModule.forRoot({type: 'ball-scale-multiple'})
   ],
   providers: [EventService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent], schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {
 }
