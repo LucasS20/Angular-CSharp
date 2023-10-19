@@ -3,7 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {EventosComponent} from './components/eventos/eventos.component';
 import {PalestrantesComponent} from './components/palestrantes/palestrantes.component';
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -22,11 +21,13 @@ import { TituloComponent } from './shared/titulo/titulo.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { EventoDetalheComponent } from './components/eventos/evento-detalhe/evento-detalhe.component';
+import { EventoListagemComponent } from './components/eventos/evento-listagem/evento-listagem.component';
+import {EventosComponent} from "./components/eventos/eventos.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    EventosComponent,
     PalestrantesComponent,
     NavBarComponent,
     DateFormatPipe,
@@ -34,7 +35,9 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     ContatosComponent,
     DashboardComponent,
     PerfilComponent,
-
+    EventoDetalheComponent,
+    EventoListagemComponent,
+    EventosComponent
   ],
   imports: [
     BrowserModule,
