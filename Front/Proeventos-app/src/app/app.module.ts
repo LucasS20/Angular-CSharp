@@ -20,10 +20,13 @@ import {NgxSpinnerModule} from "ngx-spinner";
 import { TituloComponent } from './shared/titulo/titulo.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { PerfilComponent } from './components/perfil/perfil.component';
+import { PerfilComponent } from './components/user/perfil/perfil.component';
 import { EventoDetalheComponent } from './components/eventos/evento-detalhe/evento-detalhe.component';
 import { EventoListagemComponent } from './components/eventos/evento-listagem/evento-listagem.component';
 import {EventosComponent} from "./components/eventos/eventos.component";
+import { UserComponent } from './components/user/user.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { RegistrationComponent } from './components/user/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import {EventosComponent} from "./components/eventos/eventos.component";
     PerfilComponent,
     EventoDetalheComponent,
     EventoListagemComponent,
-    EventosComponent
+    EventosComponent,
+    UserComponent,
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
