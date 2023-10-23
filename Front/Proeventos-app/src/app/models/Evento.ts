@@ -3,16 +3,16 @@ import {SocialMedia} from "./SocialMedia";
 import {EventSpeaker} from "./EventSpeaker";
 
 export interface Evento {
-  id: number;
-  local: string;
   date?: Date;
-  theme: string;
-  numberOfPeoples: number;
-  imgURL: string;
-  phone: string;
   email: string;
+  id: number;
+  imgURL: string;
+  local: string;
   lots: Lot[];
+  numberOfPeoples: number;
+  phone: string;
   socialMedias: SocialMedia[];
-  speakersEvent: EventSpeaker ;
+  speakersEvent: EventSpeaker;
+  theme: string;
 }
 

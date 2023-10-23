@@ -8,7 +8,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NavBarComponent} from './shared/nav-bar/nav-bar.component';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {EventService} from "./services/event.service";
 import {NgOptimizedImage} from "@angular/common";
 import {DateFormatPipe} from './helpers/dateFormat.pipe';
@@ -17,16 +17,16 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {ToastrModule} from 'ngx-toastr';
 import {NgxSpinnerModule} from "ngx-spinner";
-import { TituloComponent } from './shared/titulo/titulo.component';
-import { ContatosComponent } from './components/contatos/contatos.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { PerfilComponent } from './components/user/perfil/perfil.component';
-import { EventoDetalheComponent } from './components/eventos/evento-detalhe/evento-detalhe.component';
-import { EventoListagemComponent } from './components/eventos/evento-listagem/evento-listagem.component';
+import {TituloComponent} from './shared/titulo/titulo.component';
+import {ContatosComponent} from './components/contatos/contatos.component';
+import {DashboardComponent} from './components/dashboard/dashboard.component';
+import {PerfilComponent} from './components/user/perfil/perfil.component';
+import {EventoDetalheComponent} from './components/eventos/evento-detalhe/evento-detalhe.component';
+import {EventoListagemComponent} from './components/eventos/evento-listagem/evento-listagem.component';
 import {EventosComponent} from "./components/eventos/eventos.component";
-import { UserComponent } from './components/user/user.component';
-import { LoginComponent } from './components/user/login/login.component';
-import { RegistrationComponent } from './components/user/registration/registration.component';
+import {UserComponent} from './components/user/user.component';
+import {LoginComponent} from './components/user/login/login.component';
+import {RegistrationComponent} from './components/user/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +43,7 @@ import { RegistrationComponent } from './components/user/registration/registrati
     EventosComponent,
     UserComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,7 +62,8 @@ import { RegistrationComponent } from './components/user/registration/registrati
       preventDuplicates: true,
       progressBar: true,
     }),
-    NgxSpinnerModule.forRoot({type: 'ball-scale-multiple'})
+    NgxSpinnerModule.forRoot({type: 'ball-scale-multiple'}),
+    ReactiveFormsModule
   ],
   providers: [EventService],
   bootstrap: [AppComponent], schemas: [CUSTOM_ELEMENTS_SCHEMA]
