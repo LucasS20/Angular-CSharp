@@ -12,15 +12,27 @@
                 <div class="row mt-3 mb-2  ">
                     <div class="form-group col-md-6">
                         <label>Primeiro Nome</label>
-                        <input type="text" class="form-control" placeholder="Insira o Primeiro nome" formControlName="firstName" [ngClass]="{'is-invalid': getControls.firstName?.errors && getControls.firstName?.touched}"/>
-                        <div class="invalid-feedback" *ngIf="getControls.firstName.errors?.required"> O campo nome é obrigatório</div>
-                        <div class="invalid-feedback" *ngIf="getControls.firstName.errors?.minlength"> O campo nome deve possuir no minimo 3 letras </div>
+                        <input type="text" class="form-control" placeholder="Insira o Primeiro nome"
+                               formControlName="firstName"
+                               [ngClass]="{'is-invalid': getControls.firstName?.errors && getControls.firstName?.touched}"/>
+                        <div class="invalid-feedback" *ngIf="getControls.firstName.errors?.required"> O campo nome é
+                            obrigatório
+                        </div>
+                        <div class="invalid-feedback" *ngIf="getControls.firstName.errors?.minlength"> O campo nome deve
+                            possuir no minimo 3 letras
+                        </div>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Ultimo Nome</label>
-                        <input type="text" class="form-control" placeholder="Insira o Ultimo nome" formControlName="secondName" [ngClass]="{'is-invalid': getControls.secondName?.errors && getControls.secondName?.touched}"/>
-                        <div class="invalid-feedback" *ngIf="getControls.secondName.errors?.required"> O campo Ultimo nome é obrigatório</div>
-                        <div class="invalid-feedback" *ngIf="getControls.secondName.errors?.minlength"> O campo Ultimo nome deve possuir no minimo 3 letras </div>
+                        <input type="text" class="form-control" placeholder="Insira o Ultimo nome"
+                               formControlName="secondName"
+                               [ngClass]="{'is-invalid': getControls.secondName?.errors && getControls.secondName?.touched}"/>
+                        <div class="invalid-feedback" *ngIf="getControls.secondName.errors?.required"> O campo Ultimo
+                            nome é obrigatório
+                        </div>
+                        <div class="invalid-feedback" *ngIf="getControls.secondName.errors?.minlength"> O campo Ultimo
+                            nome deve possuir no minimo 3 letras
+                        </div>
                     </div>
                 </div>
                 <div class="form-group my-2">
@@ -49,10 +61,18 @@
                                formControlName="password" placeholder="Digite uma Senha"
                                [ngClass]="{'is-invalid': getControls.password?.errors && getControls.password?.touched}">
 
-                        <div class="invalid-feedback" *ngIf="getControls.password.errors?.pattern">A senha deve possuir pelo menos um caracter especial</div>
-                        <div class="invalid-feedback" *ngIf="getControls.password.errors?.minlength">A senha deve possuir no minimo 8 caracteres</div>
-                        <div class="invalid-feedback" *ngIf="getControls.password.errors?.maxlength">A senha deve possuir no maximo 50 caracteres</div>
-                        <div class="invalid-feedback " *ngIf="getControls.password.errors?.required">O campo Senha é obrigatório</div>
+                        <div class="invalid-feedback" *ngIf="getControls.password.errors?.pattern">A senha deve possuir
+                            pelo menos um caracter especial
+                        </div>
+                        <div class="invalid-feedback" *ngIf="getControls.password.errors?.minlength">A senha deve
+                            possuir no minimo 8 caracteres
+                        </div>
+                        <div class="invalid-feedback" *ngIf="getControls.password.errors?.maxlength">A senha deve
+                            possuir no maximo 50 caracteres
+                        </div>
+                        <div class="invalid-feedback " *ngIf="getControls.password.errors?.required">O campo Senha é
+                            obrigatório
+                        </div>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Confirmar Senha:</label>
@@ -60,10 +80,13 @@
                                formControlName="confirmPassword" placeholder="Digite a Senha Novamente"
                                [ngClass]="{'is-invalid': getControls.confirmPassword?.errors && getControls.confirmPassword?.touched}">
 
-                        <div class="invalid-feedback" *ngIf="getControls.confirmPassword.errors?.pattern">A senha deve possuir pelo menos um caracter especial</div>
-                        <div class="invalid-feedback" *ngIf="getControls.confirmPassword.errors?.minlength">A senha deve possuir no minimo 8 caracteres</div>
-                        <div class="invalid-feedback" *ngIf="getControls.confirmPassword.errors?.maxlength">A senha deve possuir no maximo 50 caracteres</div>
-                        <div class="invalid-feedback " *ngIf="getControls.confirmPassword.errors?.required">O campo Confirmar Senha é obrigatório</div>
+                        <div class="invalid-feedback" *ngIf="getControls.confirmPassword.errors?.pattern">A senha deve
+                            possuir pelo menos um caracter especial
+                        </div>
+                        <div class="invalid-feedback " *ngIf="getControls.confirmPassword.errors?.required">O campo
+                            Confirmar Senha é obrigatório
+                        </div>
+                        <div class="invalid-feedback" *ngIf="getControls.confirmPassword.errors?.mustMatch">As senhas devem ser iguais</div>
                     </div>
                 </div>
                 <div class="form-row p-1 my-3">
