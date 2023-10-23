@@ -1,0 +1,14 @@
+<div class="d-flex  p-3 my-3 text-white bg-secondary shadow-sm ">
+  <div class="d-flex align-items-center me-auto">
+    <i class="{{iconClass}} m-md-3"></i>
+    <div class="lh-1">
+      <h2 class=" mb-0 ">{{tittle}}</h2>
+      <small>{{subtitle}}</small>
+
+    </div>
+  </div>
+  <div class="mt-auto mb-auto" *ngIf="showButton">
+    <button class="btn btn-outline-light rounded-0" (click)="listar()">Listar {{tittle}}</button>
+  </div>
+
+</div>

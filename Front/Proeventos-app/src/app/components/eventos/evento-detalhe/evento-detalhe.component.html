@@ -1,0 +1,79 @@
+<div class="card rounded-0 ">
+  <form [formGroup]="form">
+    <div class=" py-lg-4 px-3">
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label>Tema</label>
+          <input type="text" class="form-control" formControlName="theme" placeholder="Insira o Tema"
+                 [ngClass]="{'is-invalid': getControls.theme?.errors && getControls.theme?.touched}">
+          <div class="invalid-feedback" *ngIf="getControls.theme.errors?.required">O Tema é Obrigatório</div>
+          <div class="invalid-feedback" *ngIf="getControls.theme.errors?.minlength">Tema deve ter no mínimo 4 caracteres</div>
+          <div class="invalid-feedback" *ngIf="getControls.theme.errors?.maxlength">Tema deve ter no máximo 50 caracteres</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-8">
+          <label>Local</label>
+          <input type="text" class="form-control" formControlName="local"
+                 [ngClass]="{'is-invalid': getControls.local?.errors && getControls.local?.touched}"
+                 placeholder="Local">
+          <div class="invalid-feedback" *ngIf="getControls.local.errors?.required">O Local é Obrigatório</div>
+          <div class="invalid-feedback" *ngIf="getControls.local.errors?.minlength">Local deve ter no mínimo 4 caracteres</div>
+          <div class="invalid-feedback" *ngIf="getControls.local.errors?.maxlength">Local deve ter no máximo 80 caracteres</div>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Data e Hora</label>
+          <input type="datetime-local" class="form-control " formControlName="date" placeholder=""
+                 [ngClass]="{'is-invalid': getControls.date?.errors && getControls.date?.touched}">
+          <div class="invalid-feedback">Data e Hora é Obrigatório</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-2">
+          <label>Quantidade de Pessoas</label>
+          <input type="number" class="form-control" formControlName="numberOfPeoples" placeholder=""
+                 [ngClass]="{'is-invalid': getControls.numberOfPeoples?.errors && getControls.numberOfPeoples?.touched}">
+          <div class="invalid-feedback" *ngIf="getControls.numberOfPeoples.errors?.required">Quantidade de Pessoas é Obrigatório
+          </div>
+          <div class="invalid-feedback" *ngIf="getControls.numberOfPeoples.errors?.min">O evento tem que ter no mínimo 2 pessoas
+          </div>
+          <div class="invalid-feedback" *ngIf="getControls.numberOfPeoples.errors?.max">O evento tem que ter no máximo 120000
+            pessoas
+          </div>
+        </div>
+        <div class="form-group col-md-2">
+          <label>Telefone</label>
+          <input type="text" class="form-control" formControlName="phone"
+                 placeholder="(000) 90000-0000"
+                 [ngClass]="{'is-invalid': getControls.phone?.errors && getControls.phone?.touched}">
+          <div class="invalid-feedback">Telefone é Obrigatório</div>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Email</label>
+          <input type="text" class="form-control" formControlName="email" placeholder="E-mail"
+                 [ngClass]="{'is-invalid': getControls.email?.errors && getControls.email?.touched}">
+          <div class="invalid-feedback" *ngIf="getControls.email.errors?.required"> Email é Obrigatório</div>
+          <div class="invalid-feedback" *ngIf="getControls.email.errors?.email"> Insira um email valido</div>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Imagem</label>
+          <input [ngClass]="{'is-invalid': getControls.imgURL?.errors && getControls.imgURL?.touched}"
+                 class="form-control " formControlName="imgURL" placeholder="Imagem" type="text">
+          <div class="invalid-feedback" *ngIf="getControls.imgURL.errors?.required"> Imagem é Obrigatório</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex justify-content-between m-2">
+        <button class="btn btn-outline-secondary mr-auto border rounded-0" (click)="form.reset()" [disabled]="form.pristine" >
+          Cancelar Alteração
+        </button>
+        <button class="btn btn-success rounded-0" [disabled]="!form.valid">
+          <!--          <span class="spinner-border spinner-border-sm mr-1"></span>-->
+          Salvar Evento
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
