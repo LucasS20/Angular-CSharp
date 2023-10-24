@@ -1,15 +1,13 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using ProEventos.Domain;
+﻿using ProEventos.Application.Dtos;
 
 namespace ProEventos.Application.Interfaces;
 
 public interface IEventService
 {
-    Task<Event> Add(Event model);
-    Task<Event> Update(Event model,int id);
+    Task<EventDto> Add(EventDto dto);
+    Task<EventDto> Update(EventDto model, int id);
     Task<bool> Delete(int id);
-    Task<Event[]> GetEventsByThemeAsync(string theme, bool includeSpeaker = false);
-    Task<Event[]> GetAllEventsAsync(bool includeSpeaker = false);
-    Task<Event> GetEventByIdAsync(int eventoId, bool includeSpeaker = false);
+    Task<EventDto[]> GetEventsByThemeAsync(string theme, bool includeSpeaker = false);
+    Task<EventDto[]> GetAllEventsAsync(bool includeSpeaker = false);
+    Task<EventDto> GetEventByIdAsync(int eventoId, bool includeSpeaker = false);
 }

@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using ProEventos.Application;
+using ProEventos.Application.Dtos;
 using ProEventos.Application.Interfaces;
-using ProEventos.Domain;
 
 namespace Proeventos.Controllers;
 
@@ -17,13 +16,13 @@ public class EventController : ControllerBase
     }
 
     [HttpGet(Name = "GetEvent")]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> GetAllEvents()
     {
         try
         {
-            var eventos = await _iEventService.GetAllEventsAsync(true);
-            if (eventos == null) return NotFound("no events found");
-            return Ok(eventos);
+            var _events = await _iEventService.GetAllEventsAsync(true);
+            if (_events == null) return NoContent();
+            return Ok(_events);
         }
         catch (Exception e)
         {
@@ -38,7 +37,7 @@ public class EventController : ControllerBase
         try
         {
             var evento = await _iEventService.GetEventByIdAsync(id);
-            if (evento == null) return BadRequest("Cannot find a event with ID: " + id);
+            if (evento == null) return NoContent();
             return Ok(evento);
         }
         catch (Exception e)
@@ -54,7 +53,7 @@ public class EventController : ControllerBase
         try
         {
             var evento = await _iEventService.GetEventsByThemeAsync(theme, true);
-            if (evento == null) return NotFound("Cannot find a event with theme: " + theme);
+            if (evento == null) return NoContent();
             return Ok(evento);
         }
         catch (Exception e)
@@ -65,12 +64,12 @@ public class EventController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(Event eventModel)
+    public async Task<IActionResult> Post(EventDto eventModel)
     {
         try
         {
             var evento = await _iEventService.Add(eventModel);
-            if (evento == null) return BadRequest("Error when trying to add a new event");
+            if (evento == null)  return NoContent();
             return Ok(evento.Id);
         }
         catch (Exception e)
@@ -80,17 +79,17 @@ public class EventController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] Event model)
+    public async Task<IActionResult> Put(int id, [FromBody] EventDto model)
     {
         try
         {
             var evento = await _iEventService.Update(model, id);
-            if (evento == null) return BadRequest("Error when trying to update");
+            if (evento == null)  return NoContent();
             return Ok(evento);
         }
         catch (Exception e)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Internal Error, Message: " + e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,  e.StackTrace);
         }
     }
 
@@ -101,7 +100,7 @@ public class EventController : ControllerBase
         {
             return await _iEventService.Delete(id)
                 ? Ok("Deleted")
-                : BadRequest("Error then trying to delete with ID: " + id);
+                : throw new Exception("Unexpected error when trying to delete");
         }
         catch (Exception e)
         {

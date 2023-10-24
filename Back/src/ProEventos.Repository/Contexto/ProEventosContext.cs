@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 using ProEventos.Domain;
 
 namespace ProEventos.Persistence.Contexto;
 
 public class ProEventosContext : DbContext
 {
+    
     public DbSet<Event> Events { get; set; }
     public DbSet<Lot> Lots { get; set; }
     public DbSet<Speaker> Speakers { get; set; }
