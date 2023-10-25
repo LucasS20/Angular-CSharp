@@ -69,7 +69,7 @@ public class EventController : ControllerBase
         try
         {
             var evento = await _iEventService.Add(eventModel);
-            if (evento == null)  return NoContent();
+            if (evento == null) return NoContent();
             return Ok(evento.Id);
         }
         catch (Exception e)
@@ -84,12 +84,12 @@ public class EventController : ControllerBase
         try
         {
             var evento = await _iEventService.Update(model, id);
-            if (evento == null)  return NoContent();
+            if (evento == null) return NoContent();
             return Ok(evento);
         }
         catch (Exception e)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError,  e.StackTrace);
+            return StatusCode(StatusCodes.Status500InternalServerError, e.StackTrace);
         }
     }
 
@@ -99,7 +99,7 @@ public class EventController : ControllerBase
         try
         {
             return await _iEventService.Delete(id)
-                ? Ok("Deleted")
+                ? Ok(new { message = "Deleted" })
                 : throw new Exception("Unexpected error when trying to delete");
         }
         catch (Exception e)

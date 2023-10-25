@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Threading.Tasks;
+using AutoMapper;
 using ProEventos.Application.Dtos;
 using ProEventos.Application.Interfaces;
 using ProEventos.Domain;

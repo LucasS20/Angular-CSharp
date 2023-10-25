@@ -20,6 +20,7 @@ export class EventoListagemComponent implements OnInit {
     showImage: boolean = true;
     filteredEvents: Evento[] = [];
     _listFilter: string = '';
+    eventoId: number = 0;
 
     constructor(private service: EventService,
                 private modalService: BsModalService,
@@ -49,10 +50,11 @@ export class EventoListagemComponent implements OnInit {
             this.spinner.hide();
         }, 500);
 
-        this.getEvents()
+        this.loadEvents()
     }
 
-    public getEvents(): void {
+    public loadEvents(): void {
+        this.spinner.show();
         const observer = {
             next: (_events: Evento[]) => {
                 this.events = _events;
@@ -60,11 +62,13 @@ export class EventoListagemComponent implements OnInit {
             },
             error: (error: any) => {
                 console.log(error)
+                this.toastrService.error("Error while trying to load the events", "ERROR")
             },
             complete: () => {
+                this.spinner.hide();
             }
         };
-        this.service.getEvents().subscribe(observer)
+        this.service.getAll().subscribe(observer)
     }
 
     public changeState() {
@@ -72,12 +76,29 @@ export class EventoListagemComponent implements OnInit {
     }
 
 
-    openModal(template: TemplateRef<any>) {
+    openModal(event: any, template: TemplateRef<any>, id: number) {
+        event.stopPropagation();
+        this.eventoId = id;
         this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
     }
 
     confirm(): void {
-        this.toastrService.success("Operação realizada com sucesso");
+        this.spinner.show();
+        this.service.delete(this.eventoId).subscribe(
+            (result: string) => {
+                console.log(result);
+                    this.toastrService.success("Event deleted successfully");
+                    this.spinner.hide();
+                    this.loadEvents()
+            },
+            (error) => {
+                console.error(error)
+                this.spinner.hide()
+                this.toastrService.error("Error when deleting event:" + this.eventoId, "Error");
+            },
+            () => {
+                this.spinner.hide();
+            },);
         this.modalRef?.hide();
     }
 

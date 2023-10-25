@@ -6,7 +6,7 @@ export interface Evento {
   date?: Date;
   email: string;
   id: number;
-  imgURL: string;
+  imgUrl: string;
   local: string;
   lots: Lot[];
   numberOfPeoples: number;

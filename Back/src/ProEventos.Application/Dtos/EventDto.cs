@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProEventos.Application.Dtos;
 
@@ -16,7 +17,6 @@ public class EventDto
     public string Theme { get; set; }
     [Range(1,120000,ErrorMessage =  "Length should be in the range 3-50")]
     public int NumberOfPeoples { get; set; }
-    [RegularExpression(@".*\.(gif|jpe?g|bmp|png)$")]
     public string ImgUrl { get; set; }
     [Required(ErrorMessage = "The {0} is requireD"),Phone(ErrorMessage = "The {0} has a invalid format")]
     public string Phone { get; set; }

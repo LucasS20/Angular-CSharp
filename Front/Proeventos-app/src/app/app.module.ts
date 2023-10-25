@@ -27,6 +27,11 @@ import {EventosComponent} from "./components/eventos/eventos.component";
 import {UserComponent} from './components/user/user.component';
 import {LoginComponent} from './components/user/login/login.component';
 import {RegistrationComponent} from './components/user/registration/registration.component';
+import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
+import {defineLocale} from 'ngx-bootstrap/chronos';
+import {ptBrLocale} from 'ngx-bootstrap/locale';
+
+defineLocale('pt-br', ptBrLocale)
 
 @NgModule({
   declarations: [
@@ -57,16 +62,21 @@ import {RegistrationComponent} from './components/user/registration/registration
     BsDropdownModule,
     ModalModule.forRoot(),
     ToastrModule.forRoot({
-      timeOut: 3000,
-      positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
-      progressBar: true,
-    }),
+        timeOut: 3000,
+        positionClass: 'toast-bottom-right',
+        preventDuplicates: true,
+        progressBar: true,
+      }
+    ),
+    BsDatepickerModule.forRoot(),
     NgxSpinnerModule.forRoot({type: 'ball-scale-multiple'}),
     ReactiveFormsModule
   ],
   providers: [EventService],
-  bootstrap: [AppComponent], schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  bootstrap:
+    [AppComponent], schemas:
+    [CUSTOM_ELEMENTS_SCHEMA]
 })
+
 export class AppModule {
 }

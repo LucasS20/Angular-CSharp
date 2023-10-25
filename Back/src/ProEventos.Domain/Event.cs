@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 
@@ -16,6 +18,7 @@ public class Event
     public string ImgUrl { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
+    
     public IEnumerable<Lot> Lots { get; set; }
     public IEnumerable<SocialMedia> SocialMedias { get; set; }
     public IEnumerable<EventSpeaker> SpeakersEvent { get; set; }

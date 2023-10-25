@@ -12,3 +12,5 @@
 /Back/src/Proeventos/Proeventos.db
 /Back/src/Proeventos/Proeventos.db-shm
 /Back/src/Proeventos/Proeventos.db-wal
+/Back/src/ProEventos.Repository/bin/
+/Back/src/ProEventos.Repository/obj/

@@ -1,4 +1,5 @@
-﻿using ProEventos.Application.Dtos;
+﻿using System.Threading.Tasks;
+using ProEventos.Application.Dtos;
 
 namespace ProEventos.Application.Interfaces;
 

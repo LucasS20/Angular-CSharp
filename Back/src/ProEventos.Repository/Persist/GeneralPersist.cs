@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using ProEventos.Persistence.Contexto;
 using ProEventos.Persistence.Interfaces;
 

@@ -1,4 +1,6 @@
-﻿namespace ProEventos.Domain;
+﻿using System.Collections.Generic;
+
+namespace ProEventos.Domain;
 public class Speaker
 {
     public int Id { get; set; }

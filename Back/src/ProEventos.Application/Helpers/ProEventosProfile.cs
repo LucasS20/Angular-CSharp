@@ -11,6 +11,6 @@ public class ProEventosProfile : Profile
         CreateMap<Event, EventDto>().ReverseMap();
         CreateMap<Lot, LotDto>().ReverseMap();
         CreateMap<SocialMedia, SocialMediaDto>().ReverseMap();
-        CreateMap<Speaker, SpeakerDto>();
+        CreateMap<Speaker, SpeakerDto>().ReverseMap();
     }
 }
