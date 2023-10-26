@@ -85,7 +85,7 @@ export class EventoListagemComponent implements OnInit {
     confirm(): void {
         this.spinner.show();
         this.service.delete(this.eventoId).subscribe(
-            (result: string) => {
+            (result: any) => {
                 console.log(result);
                     this.toastrService.success("Event deleted successfully");
                     this.spinner.hide();

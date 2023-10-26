@@ -10,8 +10,6 @@ public class EventDto
     public string Date { get; set; }
 
     [Required(ErrorMessage = "The {0} is required"),
-    // MinLength(3,ErrorMessage = "The {0} must have at least 3 characters")
-    // ,MaxLength(50,ErrorMessage = "The {0} must have a maximum of 50 characters")
     StringLength(50,MinimumLength = 3,ErrorMessage = "Length should be in the range 3-50")
     ]
     public string Theme { get; set; }

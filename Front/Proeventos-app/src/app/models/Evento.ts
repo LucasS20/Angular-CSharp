@@ -11,8 +11,8 @@ export interface Evento {
   lots: Lot[];
   numberOfPeoples: number;
   phone: string;
-  socialMedias: SocialMedia[];
-  speakersEvent: EventSpeaker;
+  socialMedias: SocialMedia;
+  speakersEvent: EventSpeaker[] ;
   theme: string;
 }
 
