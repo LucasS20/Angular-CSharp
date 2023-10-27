@@ -10,9 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<ILotService, LotService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IGeneralPersist, GeneralPersist>();
 builder.Services.AddScoped<IEventPersist, EventPersist>();
+builder.Services.AddScoped<ILotPersist, LotPersist>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ProEventosContext>(

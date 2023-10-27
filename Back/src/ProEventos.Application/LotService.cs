@@ -27,7 +27,7 @@ public class LotService : ILotService
         await _generalPersist.SaveChangesAsync();
     }
 
-    public async Task<LotDto[]> SaveLot(int eventId, LotDto[] models)
+    public async Task<LotDto[]> Put(int eventId, LotDto[] models)
     {
         var lotes = _lotPersist.GetLotsByEventId(eventId);
         if (lotes == null) return null;
