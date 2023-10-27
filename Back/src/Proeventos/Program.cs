@@ -1,9 +1,4 @@
-using System;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using ProEventos.Application;
 using ProEventos.Application.Interfaces;
 using ProEventos.Persistence.Contexto;
@@ -25,7 +20,6 @@ builder.Services.AddDbContext<ProEventosContext>(
 );
 builder.Services.AddCors();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

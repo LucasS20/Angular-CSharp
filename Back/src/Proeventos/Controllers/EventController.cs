@@ -74,7 +74,7 @@ public class EventController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Error: " + e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, "Error: " + e.InnerException.Message);
         }
     }
 

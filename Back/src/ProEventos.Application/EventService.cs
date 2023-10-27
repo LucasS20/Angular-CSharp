@@ -36,7 +36,7 @@ public class EventService : IEventService
 
         catch (Exception e)
         {
-            throw new Exception(e.Message);
+            throw e;
         }
 
         return null;
@@ -66,7 +66,7 @@ public class EventService : IEventService
         }
         catch (Exception e)
         {
-            throw new Exception(e.Message);
+            throw e;
         }
 
         return null;
@@ -83,7 +83,7 @@ public class EventService : IEventService
         }
         catch (Exception e)
         {
-            throw new Exception(e.Message);
+            throw e;
         }
     }
 
@@ -98,7 +98,7 @@ public class EventService : IEventService
         }
         catch (Exception e)
         {
-            throw new Exception(e.Message);
+            throw e;
         }
     }
 

@@ -8,11 +8,11 @@ export interface Evento {
   id: number;
   imgUrl: string;
   local: string;
-  lots: Lot[];
   numberOfPeoples: number;
   phone: string;
   socialMedias: SocialMedia[];
   speakersEvent: EventSpeaker[] ;
+  lots: Lot[];
   theme: string;
 }
 
