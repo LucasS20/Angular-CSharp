@@ -2,7 +2,7 @@ import {Component, OnInit, TemplateRef} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {ToastrService} from "ngx-toastr";
 import {NgxSpinnerService} from "ngx-spinner";
-import {EventService} from "../../../services/event.service";
+import {EventService} from "../../../services/event/event.service";
 import {Evento} from "../../../models/Evento";
 import {Router} from "@angular/router";
 
@@ -66,7 +66,7 @@ export class EventoListagemComponent implements OnInit {
       complete: () => {
       }
     };
-    this.service.getAll().subscribe(observer).add(()=>this.spinner.hide())
+    this.service.getAll().subscribe(observer).add(() => this.spinner.hide())
   }
 
   public changeState() {

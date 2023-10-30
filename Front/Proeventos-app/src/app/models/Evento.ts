@@ -1,4 +1,4 @@
-import {Lot} from "./Lot";
+import {Batch} from "./Batch";
 import {SocialMedia} from "./SocialMedia";
 import {EventSpeaker} from "./EventSpeaker";
 
@@ -12,7 +12,7 @@ export interface Evento {
   phone: string;
   socialMedias: SocialMedia[];
   speakersEvent: EventSpeaker[] ;
-  lots: Lot[];
+  lots: Batch[];
   theme: string;
 }
 

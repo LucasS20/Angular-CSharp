@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable, tap} from "rxjs";
-import {Evento} from "../models/Evento";
+import {Evento} from "../../models/Evento";
 
 @Injectable({
     providedIn: 'root'
@@ -35,7 +35,7 @@ export class EventService {
         return this.http.put<Evento>(`${this.baseURL}/${evento.id}`, evento);
     }
 
-    public  delete(id: number):Observable<any> {
+    public  delete(id: number) {
         return this.http.delete(`${this.baseURL}/${id}`);
     }
 

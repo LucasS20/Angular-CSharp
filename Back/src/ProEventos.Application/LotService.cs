@@ -21,30 +21,42 @@ public class LotService : ILotService
 
     public async Task AddLot(int eventId, LotDto dto)
     {
-        var lot = _autoMapper.Map<Lot>(dto);
-        lot.EventId = eventId;
-        _generalPersist.Add(lot);
-        await _generalPersist.SaveChangesAsync();
+
+            var lot = _autoMapper.Map<Lot>(dto);
+            lot.EventId = eventId;
+            _generalPersist.Add(lot);
+            await _generalPersist.SaveChangesAsync();
+        
+
+
     }
 
     public async Task<LotDto[]> Put(int eventId, LotDto[] models)
     {
-        var lotes = _lotPersist.GetLotsByEventId(eventId);
-        if (lotes == null) return null;
-        foreach (var model in models)
+        try
         {
-            if (model.Id != 0)
+            var lotes = _lotPersist.GetLotsByEventId(eventId);
+            if (lotes.Result == null) return null;
+            foreach (var model in models)
             {
-                await AddLot(eventId, model);
+                if (model.Id == 0)
+                {
+                    await AddLot(eventId, model);
+                }
+                else
+                {
+                    await UpdateLot(eventId, lotes, model);
+                }
             }
-            else
-            {
-                await UpdateLot(eventId, lotes, model);
-            }
-        }
 
-        var lotDto = await _lotPersist.GetLotsByEventId(eventId);
-        return _autoMapper.Map<LotDto[]>(lotDto);
+            var lotDto = await _lotPersist.GetLotsByEventId(eventId);
+            return _autoMapper.Map<LotDto[]>(lotDto);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.InnerException.Message);
+        }
+       
     }
 
     private async Task UpdateLot(int eventId, Task<Lot[]> lotes, LotDto model)
@@ -56,18 +68,18 @@ public class LotService : ILotService
         await _generalPersist.SaveChangesAsync();
     }
 
-    public async Task<bool> Delete(int eventId, int lotId)
+    public async Task<bool> Delete(int eventoId, int lotId)
     {
-        var _event = await _lotPersist.GetLotByIdsAsync(eventId, lotId);
-        if (_event == null) throw new Exception($"Doesnt exist a lot with id {lotId} in event with id = {eventId}");
+        var _event = await _lotPersist.GetLotByIdsAsync(eventoId, lotId);
+        if (_event == null) throw new Exception($"Doesnt exist a lot with id {eventoId} in event with id = {lotId}");
         _generalPersist.Delete(_event);
         return await _generalPersist.SaveChangesAsync();
     }
 
     public async Task<LotDto[]> GetLotsByEventIdAsync(int eventId)
     {
-        var lots = _lotPersist.GetLotsByEventId(eventId);
-        return await lots == null ? null : _autoMapper.Map<LotDto[]>(lots);
+        var lots = _lotPersist.GetLotsByEventId(eventId).Result;
+        return  lots == null ? null : _autoMapper.Map<LotDto[]>(lots);
     }
 
 

@@ -19,16 +19,16 @@ public class LotPersist : ILotPersist
     {
         IQueryable<Lot> queryable = _context.Lots;
 
-        queryable =  queryable.AsNoTracking().Where(l => l.EventId == eventoId);
+        queryable = queryable.AsNoTracking().Where(l => l.EventId == eventoId);
 
-        return  queryable.ToArray();
+        return queryable.ToArray();
     }
 
     public async Task<Lot> GetLotByIdsAsync(int eventoId, int lotId)
     {
         IQueryable<Lot> queryable = _context.Lots;
 
-        queryable = queryable.AsNoTracking().Where(l => l.EventId == eventoId && l.Id == lotId);
+        queryable = queryable.Where(l => l.EventId == eventoId && l.Id == lotId);
         return await queryable.FirstOrDefaultAsync();
     }
 }

@@ -15,7 +15,7 @@ public class LotController : ControllerBase
         _iLotService = iLotService;
     }
 
-    [HttpGet("eventId")]
+    [HttpGet("{eventId}")]
     public async Task<IActionResult> GetAll(int eventId)
     {
         try
@@ -27,11 +27,10 @@ public class LotController : ControllerBase
         catch (Exception e)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
-                "Error when trying to get events. Error:" + e.Message);
+                "Error when trying to get events. Error:" + e.InnerException.Message);
         }
     }
-
-
+    
     [HttpPut("{eventId}")]
     public async Task<IActionResult> Put(int eventId, LotDto[] model)
     {
@@ -43,7 +42,7 @@ public class LotController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, e.StackTrace);
+            return StatusCode(StatusCodes.Status500InternalServerError, e.InnerException.Message);
         }
     }
 
@@ -55,14 +54,14 @@ public class LotController : ControllerBase
             var lot = await _iLotService.GetLotByIdsAsync(eventId, lotId);
             if (lot == null) return NoContent();
 
-            return await _iLotService.Delete(lotId, eventId)
+            return await _iLotService.Delete(eventId, lotId)
                 ? Ok(new { message = "Deleted" })
                 : throw new Exception($"Unexpected error when trying to delete a lot with id: {lotId} in event with id: {eventId} ");
         }
         catch (Exception e)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
-                "Internal error while delete, Error:" + e.Message);
+                "Internal error while delete, Error:" + e.InnerException.Message);
         }
     }
 }

@@ -9,7 +9,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NavBarComponent} from './shared/nav-bar/nav-bar.component';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {EventService} from "./services/event.service";
+import {EventService} from "./services/event/event.service";
 import {NgOptimizedImage} from "@angular/common";
 import {DateFormatPipe} from './helpers/dateFormat.pipe';
 import {TooltipModule} from 'ngx-bootstrap/tooltip';
