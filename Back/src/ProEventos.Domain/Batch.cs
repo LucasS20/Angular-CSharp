@@ -1,17 +1,13 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace ProEventos.Domain;
 
-namespace ProEventos.Domain;
-
-public class Lot
+public class Batch
 {
     public int Id { get; set; }
     public string Name { get; set; }
     public decimal Price { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public int Quantidade { get; set; }
-    // [ForeignKey("Events")]
+    public int TicketAmount { get; set; }
     public int EventId { get; set; }
 
     public Event Event { get; set; }

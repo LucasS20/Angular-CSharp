@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, OnInit, TemplateRef} from '@angular/core';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {BsLocaleService} from "ngx-bootstrap/datepicker";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {EventService} from "../../../services/event/event.service";
 import {Evento} from "../../../models/Evento";
 import {NgxSpinnerService} from "ngx-spinner";
 import {ToastrService} from "ngx-toastr";
 import {Batch} from "../../../models/Batch";
-import {add} from "ngx-bootstrap/chronos";
+import {BatchService} from "../../../services/batch/batch.service";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 
 @Component({
     selector: 'app-evento-detalhe',
@@ -15,13 +16,25 @@ import {add} from "ngx-bootstrap/chronos";
     styleUrls: ['./evento-detalhe.component.scss']
 })
 export class EventoDetalheComponent implements OnInit {
-
+    private eventId: number;
     form: FormGroup
     event = {} as Evento
     saveStatus: string = 'post';
+    currentBatch = {id: 0, name: '', index: 0};
 
-    constructor(private fb: FormBuilder, private localeService: BsLocaleService, private router: ActivatedRoute, public eventService: EventService, private spinner: NgxSpinnerService,
-                private toastr: ToastrService) {
+    constructor(private fb: FormBuilder,
+                private localeService: BsLocaleService,
+                private activatedRoute: ActivatedRoute,
+                private eventService: EventService,
+                private batchService: BatchService,
+                private spinner: NgxSpinnerService,
+                private toastr: ToastrService,
+                private router: Router,
+                private modalRef: BsModalRef,
+                private modalService: BsModalService
+    ) {
+
+        this.eventId = -1;
         this.form = new FormGroup({})
         this.localeService.use('pt-br')
     }
@@ -31,12 +44,12 @@ export class EventoDetalheComponent implements OnInit {
         this.validation();
     }
 
-    //#region Gets
-    get getControls(): any {
-        return this.form.controls;
+//#region Gets
+    public get getControls(): any {
+        return this.form?.controls;
     }
 
-    get bsConfig() {
+    public get bsConfig() {
         return {
             adaptivePosition: true,
             dateInputFormat: 'DD/MM/YYYY mm:ss a',
@@ -45,12 +58,17 @@ export class EventoDetalheComponent implements OnInit {
         }
     }
 
-    get lotsFormArray(): FormArray {
-        return this.form.get('lots') as FormArray
+    public get editMode() {
+        return this.saveStatus === 'put';
     }
 
-    //endregion
-    public validation() {
+    public get batches(): FormArray {
+        return this.form.get('batches') as FormArray
+    }
+
+//endregion
+
+    private validation() {
         this.form = this.fb.group({
             date: ['', [Validators.required, Validators.minLength(3)]],
             theme: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
@@ -63,39 +81,74 @@ export class EventoDetalheComponent implements OnInit {
             imgUrl: ['', Validators.required],
             phone: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
-            lots: this.fb.array([])
+            batches: this.fb.array([])
         })
     }
 
-    addLot(): void {
-        this.lotsFormArray.push(this.createLot({id: 0} as Batch))
+//#region Batches
+    public addBatch(): void {
+        this.batches.push(this.createBatch({id: 0} as Batch))
     }
 
-    createLot(lot: Batch): FormGroup {
-        return this.fb.group({
-            id: [lot.id],
-            name: [lot.name, Validators.required],
-            price: [lot.price, Validators.required],
-            startDate: [lot.startdate, Validators.required],
-            endDate: [lot.enddate, Validators.required],
-            ticketAmount: [lot.ticketsAmount, Validators.required],
-        })
+    public saveBatches() {
+
+        if (this.getControls['batches'].valid) {
+            this.spinner.show();
+            this.batchService.saveBatch(this.eventId, this.form.value['batches']).subscribe(
+                () => {
+                    this.toastr.success("Lotes salvos com sucesso!", 'Sucesso!')
+                    this.batches.reset();
+                },
+                (error: any) => {
+                    this.toastr.error("Error ao tentar salvar lotes", 'Error');
+                    console.error(error);
+                },
+                () => {
+                    this.spinner.hide();
+                }
+            ).add(() => this.spinner.hide())
+        } else {
+            this.toastr.info("Insira o formulário valido", "Ops!!")
+        }
     }
 
-    public cssValidator(campo: FormControl) {
-        return {'is-invalid': campo.errors && campo.touched}
+    public loadBatches() {
+        this.batchService.getByEventId(this.eventId).subscribe(
+            (batches: Batch[]) => {
+                batches.forEach(b => this.batches.push(this.createBatch(b)))
+            },
+            (error) => {
+                console.error(error)
+                this.toastr.error("Erro ao carregar os lotes")
+            },
+            () => {
+                this.spinner.hide()
+            },)
     }
 
+    public deleteBatch(template: TemplateRef<any>, index: number) {
+        this.currentBatch.id = this.batches.get(index + '.id')?.value;
+        this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+
+    }
+
+//endregion
+    public cssValidator(campo: FormControl | AbstractControl | null) {
+        return campo ? {'is-invalid': campo.errors && campo.touched} : {};
+    }
+
+//#region EVENTS
     public loadEvent() {
-
-        let eventIdParam = this.router.snapshot.paramMap.get('id');
-        if (eventIdParam !== null) {
+        // @ts-ignore
+        this.eventId = this.activatedRoute.snapshot.paramMap ? +this.activatedRoute.snapshot?.paramMap.get('id') : -1;
+        if (this.eventId !== null && this.eventId !== 0) {
             this.saveStatus = 'put'
             this.spinner.show()
-            this.eventService.getById(+eventIdParam).subscribe(
+            this.eventService.getById(this.eventId).subscribe(
                 (event: Evento) => {
                     this.event = {...event}
                     this.form.patchValue(this.event)
+                    this.loadBatches();
                 },
                 (error: any) => {
                     console.error(error)
@@ -109,7 +162,8 @@ export class EventoDetalheComponent implements OnInit {
         }
     }
 
-    saveChanges() {
+
+    public saveEvent() {
         this.spinner.show();
 
 
@@ -130,8 +184,10 @@ export class EventoDetalheComponent implements OnInit {
 
             // @ts-ignore
             this.eventService[this.saveStatus](this.event).subscribe(
-                () => {
+                (evento: Evento) => {
+
                     this.toastr.success('Event saved successfully', 'Saved')
+                    this.router.navigate([`eventos/detalhe/${evento.id}`]);
                 },
                 (error: any) => {
                     console.log(error);
@@ -146,11 +202,48 @@ export class EventoDetalheComponent implements OnInit {
         }
     }
 
-    initRequiredFields() {
+//endregion
+//#region private methods
+    private createBatch(batch: Batch):
+        FormGroup {
+        return this.fb.group({
+            id: [batch.id],
+            name: [batch.name, Validators.required],
+            price: [batch.price, Validators.required],
+            startDate: [batch.startDate, Validators.required],
+            endDate: [batch.endDate, Validators.required],
+            ticketAmount: [batch.ticketAmount, Validators.required],
+        })
+    }
+
+    private initRequiredFields() {
         this.event.lots = []
         this.event.speakersEvent = []
         this.event.socialMedias = []
     }
 
-    protected readonly add = add;
+//endregion
+
+    decline() {
+        this.modalRef.hide();
+    }
+
+    confirm() {
+
+        this.modalRef.hide();
+        this.spinner.show();
+
+        this.batchService.delete(this.eventId, this.currentBatch.id).subscribe(
+            () => {
+                this.toastr.success("Lote deletado com sucesso", "Deletado")
+                this.batches.removeAt(this.currentBatch.index);
+            },
+            () => {
+                this.toastr.error("Erro ao deletar", "Erro")
+            },
+            () => {
+            }
+        ).add(() => this.spinner.hide());
+        this.spinner.hide();
+    }
 }

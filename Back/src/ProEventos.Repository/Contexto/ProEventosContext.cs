@@ -8,7 +8,7 @@ public class ProEventosContext : DbContext
 {
     
     public DbSet<Event> Events { get; set; }
-    public DbSet<Lot> Lots { get; set; }
+    public DbSet<Batch> Batches { get; set; }
     public DbSet<Speaker> Speakers { get; set; }
     public DbSet<EventSpeaker> EventSpeakers { get; set; }
     public DbSet<SocialMedia> SocialMedias { get; set; }

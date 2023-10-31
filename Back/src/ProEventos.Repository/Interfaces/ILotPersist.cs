@@ -8,7 +8,7 @@ public interface ILotPersist
  /// </summary>
  /// <param name="eventoId"></param>
  /// <returns></returns>
-    Task<Lot[]> GetLotsByEventId(int eventoId);
+    Task<Batch[]> GetLotsByEventId(int eventoId);
  
     /// <summary>
     ///     Return a lot from the database
@@ -16,5 +16,5 @@ public interface ILotPersist
     /// <param name="eventoId">eventID from the event where the lot is</param>
     /// <param name="lotId">Lot ID</param>
     /// <returns></returns>
-    Task<Lot> GetLotByIdsAsync(int eventoId, int lotId);
+    Task<Batch> GetLotByIdsAsync(int eventoId, int lotId);
 }

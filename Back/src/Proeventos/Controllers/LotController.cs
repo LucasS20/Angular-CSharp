@@ -32,7 +32,7 @@ public class LotController : ControllerBase
     }
     
     [HttpPut("{eventId}")]
-    public async Task<IActionResult> Put(int eventId, LotDto[] model)
+    public async Task<IActionResult> Put(int eventId, BatchDto[] model)
     {
         try
         {
@@ -42,7 +42,7 @@ public class LotController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, e.InnerException.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, e.StackTrace);
         }
     }
 

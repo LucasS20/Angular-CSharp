@@ -15,18 +15,25 @@ public class LotPersist : ILotPersist
         _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
 
-    public async Task<Lot[]> GetLotsByEventId(int eventoId)
+    public async Task<Batch[]> GetLotsByEventId(int eventoId)
     {
-        IQueryable<Lot> queryable = _context.Lots;
+        try
+        {
+            IQueryable<Batch> queryable = _context.Batches;
 
-        queryable = queryable.AsNoTracking().Where(l => l.EventId == eventoId);
+            queryable = queryable.AsNoTracking().Where(l => l.EventId == eventoId);
 
-        return queryable.ToArray();
+            return queryable.ToArray();
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.InnerException.Message);
+        }
     }
 
-    public async Task<Lot> GetLotByIdsAsync(int eventoId, int lotId)
+    public async Task<Batch> GetLotByIdsAsync(int eventoId, int lotId)
     {
-        IQueryable<Lot> queryable = _context.Lots;
+        IQueryable<Batch> queryable = _context.Batches;
 
         queryable = queryable.Where(l => l.EventId == eventoId && l.Id == lotId);
         return await queryable.FirstOrDefaultAsync();

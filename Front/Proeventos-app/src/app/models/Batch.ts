@@ -4,9 +4,9 @@ export interface Batch {
     id: number;
     name: string;
     price: number;
-    startdate?: Date;
-    enddate?: Date;
-    ticketsAmount: number;
+    startDate?: Date;
+    endDate?: Date;
+    ticketAmount: number;
     eventid: number;
     _event: Evento;
 }

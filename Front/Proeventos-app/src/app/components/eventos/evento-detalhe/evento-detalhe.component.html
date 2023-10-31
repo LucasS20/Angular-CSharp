@@ -6,11 +6,12 @@
                     <label>Tema</label>
                     <input type="text" class="form-control" formControlName="theme" placeholder="Insira o Tema"
                            [ngClass]="cssValidator(getControls.theme)">
-                    <div class="invalid-feedback" *ngIf="getControls.theme.errors?.required">O Tema é Obrigatório</div>
-                    <div class="invalid-feedback" *ngIf="getControls.theme.errors?.minlength">Tema deve ter no mínimo 4
+                    <div class="invalid-feedback" *ngIf="getControls?.theme.errors?.required">O Tema é Obrigatório</div>
+                    <div class="invalid-feedback" *ngIf="getControls?.theme.errors?.minlength">Tema deve ter no mínimo 4
                         caracteres
                     </div>
-                    <div class="invalid-feedback" *ngIf="getControls.theme.errors?.maxlength">Tema deve ter no máximo 50
+                    <div class="invalid-feedback" *ngIf="getControls?.theme.errors?.maxlength">Tema deve ter no máximo
+                        50
                         caracteres
                     </div>
                 </div>
@@ -20,13 +21,15 @@
                 <div class="form-group col-md-8">
                     <label>Local</label>
                     <input type="text" class="form-control" formControlName="local"
-                           [ngClass]="cssValidator(getControls.local)"
+                           [ngClass]="cssValidator(getControls?.local)"
                            placeholder="Local">
-                    <div class="invalid-feedback" *ngIf="getControls.local.errors?.required">O Local é Obrigatório</div>
-                    <div class="invalid-feedback" *ngIf="getControls.local.errors?.minlength">Local deve ter no mínimo 4
+                    <div class="invalid-feedback" *ngIf="getControls?.local.errors?.required">O Local é Obrigatório
+                    </div>
+                    <div class="invalid-feedback" *ngIf="getControls?.local.errors?.minlength">Local deve ter no mínimo
+                        4
                         caracteres
                     </div>
-                    <div class="invalid-feedback" *ngIf="getControls.local.errors?.maxlength">Local deve ter no máximo
+                    <div class="invalid-feedback" *ngIf="getControls?.local.errors?.maxlength">Local deve ter no máximo
                         80
                         caracteres
                     </div>
@@ -44,16 +47,16 @@
                 <div class="form-group col-md-2">
                     <label>Quantidade de Pessoas</label>
                     <input type="number" class="form-control" formControlName="numberOfPeoples" placeholder=""
-                           [ngClass]="cssValidator(getControls.numberOfPeoples)">
-                    <div class="invalid-feedback" *ngIf="getControls.numberOfPeoples.errors?.required">Quantidade de
+                           [ngClass]="cssValidator(getControls?.numberOfPeoples)">
+                    <div class="invalid-feedback" *ngIf="getControls?.numberOfPeoples.errors?.required">Quantidade de
                         Pessoas é
                         Obrigatório
                     </div>
-                    <div class="invalid-feedback" *ngIf="getControls.numberOfPeoples.errors?.min">O evento tem que ter
+                    <div class="invalid-feedback" *ngIf="getControls?.numberOfPeoples.errors?.min">O evento tem que ter
                         no mínimo 2
                         pessoas
                     </div>
-                    <div class="invalid-feedback" *ngIf="getControls.numberOfPeoples.errors?.max">O evento tem que ter
+                    <div class="invalid-feedback" *ngIf="getControls?.numberOfPeoples.errors?.max">O evento tem que ter
                         no máximo
                         120000
                         pessoas
@@ -63,15 +66,15 @@
                     <label>Telefone</label>
                     <input type="text" class="form-control" formControlName="phone"
                            placeholder="(000) 90000-0000"
-                           [ngClass]="cssValidator(getControls.phone)">
+                           [ngClass]="cssValidator(getControls?.phone)">
                     <div class="invalid-feedback">Telefone é Obrigatório</div>
                 </div>
                 <div class="form-group col-md-4">
                     <label>Email</label>
                     <input type="text" class="form-control" formControlName="email" placeholder="E-mail"
-                           [ngClass]="cssValidator(getControls.email)">
-                    <div class="invalid-feedback" *ngIf="getControls.email.errors?.required"> Email é Obrigatório</div>
-                    <div class="invalid-feedback" *ngIf="getControls.email.errors?.email"> Insira um email valido</div>
+                           [ngClass]="cssValidator(getControls?.email)">
+                    <div class="invalid-feedback" *ngIf="getControls?.email.errors?.required"> Email é Obrigatório</div>
+                    <div class="invalid-feedback" *ngIf="getControls?.email.errors?.email"> Insira um email valido</div>
                 </div>
                 <div class="form-group col-md-4">
                     <label>Imagem</label>
@@ -88,8 +91,8 @@
                         [disabled]="form.pristine">
                     Cancelar Alteração
                 </button>
-                <button class="btn btn-success rounded-0" [disabled]="!form.valid" (click)="saveChanges()">
-                    <!--          <span class="spinner-border spinner-border-sm mr-1"></span>-->
+                <button class="btn btn-success rounded-0" [disabled]="!form.valid" (click)="saveEvent()">
+                    <span class="spinner-border spinner-border-sm mr-1" *ngIf="!form.valid"></span>
                     Salvar Evento
                 </button>
             </div>
@@ -97,7 +100,9 @@
     </form>
 </div>
 
-<div class="card rounded-0 shadow-sm my-5">
+<div class="card rounded-0 shadow-sm my-5" *ngIf="editMode">
+    <p>{{form.controls['batches'].value|json}}</p>
+    <p>{{form.valid}}</p>
     <div class="p-3">
         <div class="d-flex  bottom justify-content-between">
             <h2 class="me-auto">
@@ -110,42 +115,50 @@
         <p>Clique em Lote para adicionar e preencher novos Lotes</p>
         <div class="form-row p-1 my-2">
             <div class="col" [formGroup]="form">
-                <div formArrayName="lots" *ngFor=" let lot of lotsFormArray.controls;let i=index " class="my-4">
+                <div formArrayName="batches" *ngFor=" let batch of batches?.controls;let i=index " class="my-4">
                     <fieldset class="form-group" [formGroupName]="i">
                         <legend class="d-flex justify-content-between capitalize">
                             <button class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex rounded-0"
                                     tooltip="Excluir Lote"
                                     [adaptivePosition]="false"
                                     [delay]="500"
-                                    placement="left">
-                                <i class="fa fa-window-close my-1"></i>
+                                    placement="left"
+                                    (click)="deleteBatch(template,i)">
+                                <i class="fa fa-window-close my-1" ></i>
+
                                 <b class="ml-1 d-none d-sm-block">Excluir</b>
                             </button>
                         </legend>
                         <div class="row mt-2 mb-2">
                             <div class="form-group col-md-4">
                                 <label>Nome</label>
-                                <input type="text" class="form-control" formControlName="name" placeholder="Lote">
+                                <input type="text" class="form-control" formControlName="name" placeholder="Lote"
+                                       [ngClass]=" cssValidator(batches.controls[i].get('name')) ">
+
 
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Quantidade</label>
-                                <input type="text" class="form-control" placeholder="000"
-                                       formControlName="ticketAmount">
+                                <input type="number" class="form-control" placeholder="000"
+                                       formControlName="ticketAmount"
+                                       [ngClass]=" cssValidator(batches.controls[i].get('ticketAmount')) ">
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Preço</label>
-                                <input type="text" class="form-control" placeholder="R$ 0,00" formControlName="price">
+                                <input type="number" class="form-control" placeholder="R$ 0,00" formControlName="price"
+                                       [ngClass]=" cssValidator(batches.controls[i].get('price')) ">
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Data Início</label>
                                 <input type="text" class="form-control" placeholder="01/01/2019"
-                                       formControlName="startDate">
+                                       formControlName="startDate"
+                                       [ngClass]=" cssValidator(batches.controls[i].get('startDate')) ">
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Data Fim</label>
                                 <input type="text" class="form-control" placeholder="01/01/2019"
-                                       formControlName="endDate">
+                                       formControlName="endDate"
+                                       [ngClass]="cssValidator(batches.controls[i].get('endDate'))">
                             </div>
                         </div>
                     </fieldset>
@@ -153,12 +166,10 @@
             </div>
         </div>
         <div class="justify-content-between d-flex">
-            <button class="d-flex btn btn-outline-primary ms-1 mt-2 rounded-0" (click)="addLot()">
+            <button class="d-flex btn btn-outline-primary ms-1 mt-2 rounded-0" (click)="addBatch()">
                 <i class="fa fa-plus-circle my-1"></i>
                 <b class="ml-1">Lote</b>
             </button>
-
-
         </div>
     </div>
     <div class="card-footer">
@@ -166,14 +177,18 @@
             <button class="btn btn-outline-secondary mr-auto border rounded-0">
                 Cancelar Alteração
             </button>
-            <button class="btn btn-success rounded-0">
+            <button (click)="saveBatches()" class="btn btn-success rounded-0">
                 Salvar Lotes
             </button>
         </div>
     </div>
 </div>
 
+<ng-template #template>
+    <div class="modal-body text-center">
+        <p>Do you want to Delete the Batch? <span style="font-weight: bold">{{this.currentBatch.name}}</span></p>
+        <button type="button" class="btn btn-default" (click)="confirm()">Yes</button>
+        <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+    </div>
 
-
-
-
+</ng-template>
