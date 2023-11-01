@@ -85,6 +85,7 @@ export class EventoDetalheComponent implements OnInit {
         })
     }
 
+
 //#region Batches
     public addBatch(): void {
         this.batches.push(this.createBatch({id: 0} as Batch))
@@ -94,10 +95,12 @@ export class EventoDetalheComponent implements OnInit {
 
         if (this.getControls['batches'].valid) {
             this.spinner.show();
+            console.log(this.form.value['batches'])
+            console.log(this.eventId);
             this.batchService.saveBatch(this.eventId, this.form.value['batches']).subscribe(
                 () => {
                     this.toastr.success("Lotes salvos com sucesso!", 'Sucesso!')
-                    this.batches.reset();
+                    this.router.navigate([`eventos/detalhe/${this.eventId}`]);
                 },
                 (error: any) => {
                     this.toastr.error("Error ao tentar salvar lotes", 'Error');
@@ -129,7 +132,6 @@ export class EventoDetalheComponent implements OnInit {
     public deleteBatch(template: TemplateRef<any>, index: number) {
         this.currentBatch.id = this.batches.get(index + '.id')?.value;
         this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
-
     }
 
 //endregion
@@ -161,7 +163,6 @@ export class EventoDetalheComponent implements OnInit {
             );
         }
     }
-
 
     public saveEvent() {
         this.spinner.show();
@@ -235,10 +236,12 @@ export class EventoDetalheComponent implements OnInit {
 
         this.batchService.delete(this.eventId, this.currentBatch.id).subscribe(
             () => {
+                console.log(this.currentBatch.id)
                 this.toastr.success("Lote deletado com sucesso", "Deletado")
                 this.batches.removeAt(this.currentBatch.index);
             },
-            () => {
+            (e) => {
+                console.error(e)
                 this.toastr.error("Erro ao deletar", "Erro")
             },
             () => {

@@ -30,52 +30,53 @@ import {RegistrationComponent} from './components/user/registration/registration
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {defineLocale} from 'ngx-bootstrap/chronos';
 import {ptBrLocale} from 'ngx-bootstrap/locale';
+import {NgxCurrencyDirective} from "ngx-currency";
 
 defineLocale('pt-br', ptBrLocale)
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PalestrantesComponent,
-    NavBarComponent,
-    DateFormatPipe,
-    TituloComponent,
-    ContatosComponent,
-    DashboardComponent,
-    PerfilComponent,
-    EventoDetalheComponent,
-    EventoListagemComponent,
-    EventosComponent,
-    UserComponent,
-    LoginComponent,
-    RegistrationComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    CollapseModule.forRoot(),
-    FormsModule,
-    NgOptimizedImage,
-    TooltipModule,
-    BsDropdownModule,
-    ModalModule.forRoot(),
-    ToastrModule.forRoot({
-        timeOut: 3000,
-        positionClass: 'toast-bottom-right',
-        preventDuplicates: true,
-        progressBar: true,
-      }
-    ),
-    BsDatepickerModule.forRoot(),
-    NgxSpinnerModule.forRoot({type: 'ball-scale-multiple'}),
-    ReactiveFormsModule
-  ],
-  providers: [EventService],
-  bootstrap:
-    [AppComponent], schemas:
-    [CUSTOM_ELEMENTS_SCHEMA]
+    declarations: [
+        AppComponent,
+        PalestrantesComponent,
+        NavBarComponent,
+        DateFormatPipe,
+        TituloComponent,
+        ContatosComponent,
+        DashboardComponent,
+        PerfilComponent,
+        EventoDetalheComponent,
+        EventoListagemComponent,
+        EventosComponent,
+        UserComponent,
+        LoginComponent,
+        RegistrationComponent,
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        CollapseModule.forRoot(),
+        FormsModule,
+        NgOptimizedImage,
+        TooltipModule,
+        BsDropdownModule,
+        ModalModule.forRoot(),
+        ToastrModule.forRoot({
+                timeOut: 3000,
+                positionClass: 'toast-bottom-right',
+                preventDuplicates: true,
+                progressBar: true,
+            }
+        ),
+        BsDatepickerModule.forRoot(),
+        NgxSpinnerModule.forRoot({type: 'ball-scale-multiple'}),
+        ReactiveFormsModule, NgxCurrencyDirective
+    ],
+    providers: [EventService],
+    bootstrap:
+        [AppComponent], schemas:
+        [CUSTOM_ELEMENTS_SCHEMA]
 })
 
 export class AppModule {
