@@ -8,44 +8,78 @@ namespace ProEventos.Application;
 
 public class SpeakerService : ISpeakerService
 {
-    private readonly IGeneralPersist _generalPersist;
     private readonly ISpeakerPersist _speakerPersist;
     private readonly IMapper _autoMapper;
 
-    public SpeakerService(IGeneralPersist generalPersist, ISpeakerPersist speakerPersist, IMapper autoMapper)
+    public SpeakerService(ISpeakerPersist speakerPersist, IMapper autoMapper)
     {
-        _generalPersist = generalPersist;
         _speakerPersist = speakerPersist;
         _autoMapper = autoMapper;
     }
 
-    public async Task<SpeakerDto> Add(SpeakerDto dto)
+    public async Task<SpeakerDto> Add(SpeakerDto dto, int speakerId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var speaker = _autoMapper.Map<Speaker>(dto);
+            _speakerPersist.Add(speaker);
+            if (await _speakerPersist.SaveChangesAsync())
+            {
+                var spkr = await _speakerPersist.GetSpeakerByIdAsync(speakerId);
+                return _autoMapper.Map<SpeakerDto>(spkr);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        return null;
     }
 
-    public Task<SpeakerDto> Update(SpeakerDto model, int id)
+    public async Task<SpeakerDto> Update(SpeakerDto dto, int speakerId)
+
     {
-        throw new NotImplementedException();
+        var speaker = await _speakerPersist.GetSpeakerByIdAsync(speakerId);
+        if (speaker == null)
+        {
+            return null;
+        }
+
+        _autoMapper.Map(dto, speaker);
+        _speakerPersist.Update(speaker);
+        if (await _speakerPersist.SaveChangesAsync())
+        {
+            var speakerReturn = await _speakerPersist.GetSpeakerByIdAsync(speakerId);
+            return _autoMapper.Map<SpeakerDto>(speakerReturn);
+        }
+
+        return null;
     }
 
-    public Task<bool> Delete(int id)
+    public async Task<bool> Delete(int speakerId)
     {
-        throw new NotImplementedException();
+        var speaker = await _speakerPersist.GetSpeakerByIdAsync(speakerId);
+        if (speaker == null) throw new Exception($"Cant find a speaker with id: {speakerId}");
+        _speakerPersist.Delete(speaker);
+        return await _speakerPersist.SaveChangesAsync();
     }
 
-    public Task<SpeakerDto[]> GetAllByEventId(int eventId)
+    public async Task<SpeakerDto[]> GetAll()
     {
-        throw new NotImplementedException();
+        var speakers = await _speakerPersist.GetAllSpeakersAsync();
+        return speakers == null ? null : _autoMapper.Map<SpeakerDto[]>(speakers);
     }
 
-    public Task<SpeakerDto[]> GetAllBySpeakerId(int speakerId)
+    public async Task<SpeakerDto> GetById(int speakerId)
     {
-        throw new NotImplementedException();
-    }
+        var speaker = await _speakerPersist.GetSpeakerByIdAsync(speakerId);
+        if (speaker == null)
+        {
+            throw new Exception($"Cant find a speaker with id: {speakerId}");
+        }
 
-    public Task<SpeakerDto> GetSpeakerByIdAsync(int eventoId, bool includeSpeaker = false)
-    {
-        throw new NotImplementedException();
+        return _autoMapper.Map<SpeakerDto>(speaker);
     }
 }

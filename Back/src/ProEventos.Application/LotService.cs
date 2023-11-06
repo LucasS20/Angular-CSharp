@@ -42,7 +42,7 @@ public class LotService : ILotService
             }
             else
             {
-                await UpdateLot(eventId, lotes, model);
+                await UpdateLot( lotes, model);
             }
         }
 
@@ -50,7 +50,7 @@ public class LotService : ILotService
         return _autoMapper.Map<BatchDto[]>(lotDto);
     }
 
-    private async Task UpdateLot(int eventId, Task<Batch[]> lotes, BatchDto model)
+    private async Task UpdateLot( Task<Batch[]> lotes, BatchDto model)
     {
         var lote = lotes.Result.FirstOrDefault(l => l.Id == model.Id);
         _autoMapper.Map(model, lote);
@@ -60,9 +60,9 @@ public class LotService : ILotService
 
     public async Task<bool> Delete(int eventoId, int lotId)
     {
-        var _event = await _lotPersist.GetLotByIdsAsync(eventoId, lotId);
-        if (_event == null) throw new Exception($"Doesnt exist a lot with id {eventoId} in event with id = {lotId}");
-        _generalPersist.Delete(_event);
+        var batch = await _lotPersist.GetLotByIdsAsync(eventoId, lotId);
+        if (batch == null) throw new Exception($"Doesnt exist a lot with id {eventoId} in event with id = {lotId}");
+        _generalPersist.Delete(batch);
         return await _generalPersist.SaveChangesAsync();
     }
 

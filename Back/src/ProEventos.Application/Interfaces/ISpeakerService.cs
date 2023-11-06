@@ -4,12 +4,12 @@ namespace ProEventos.Application.Interfaces;
 
 public interface ISpeakerService
 {
-    Task<SpeakerDto> Add(SpeakerDto dto);
+    Task<SpeakerDto> Add(SpeakerDto dto,int speakerId);
 
-    Task<SpeakerDto> Update(SpeakerDto model, int id);
+    Task<SpeakerDto> Update(SpeakerDto dto, int speakerId);
 
-    Task<SpeakerDto[]> GetAllByEventId(int eventId);
+    Task<SpeakerDto[]> GetAll();
 
-    Task<SpeakerDto[]> GetAllBySpeakerId(int speakerId);
+    Task<SpeakerDto> GetById(int speakerId);
 
 }
