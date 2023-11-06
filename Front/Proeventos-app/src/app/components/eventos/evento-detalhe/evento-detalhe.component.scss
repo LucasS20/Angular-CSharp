@@ -23,3 +23,14 @@
   top: var(--default-height);
 }
 
+.card-evento-view {
+  position: sticky;
+  top: 1%;
+}
+
+.card-img-block {
+  img {
+    cursor: pointer;
+    border-radius: 2px;
+  }
+}

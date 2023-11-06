@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using ProEventos.Application;
 using ProEventos.Application.Interfaces;
 using ProEventos.Persistence.Contexto;
@@ -39,7 +40,11 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseCors(cors => cors.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Resources")),
+    RequestPath = new PathString("/Resources")
+});
 app.MapControllers();
 
 app.Run();

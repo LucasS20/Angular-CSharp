@@ -9,6 +9,7 @@ import {ToastrService} from "ngx-toastr";
 import {Batch} from "../../../models/Batch";
 import {BatchService} from "../../../services/batch/batch.service";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {DateFormatPipe} from "../../../helpers/dateFormat.pipe";
 
 @Component({
     selector: 'app-evento-detalhe',
@@ -21,6 +22,9 @@ export class EventoDetalheComponent implements OnInit {
     event = {} as Evento
     saveStatus: string = 'post';
     currentBatch = {id: 0, name: '', index: 0};
+    imagemURL = 'assets/uploadCloud.svg';
+    file: File;
+     readonly DateFormatPipe = DateFormatPipe;
 
     constructor(private fb: FormBuilder,
                 private localeService: BsLocaleService,
@@ -33,7 +37,7 @@ export class EventoDetalheComponent implements OnInit {
                 private modalRef: BsModalRef,
                 private modalService: BsModalService
     ) {
-
+        this.file = {} as File;
         this.eventId = -1;
         this.form = new FormGroup({})
         this.localeService.use('pt-br')
@@ -131,7 +135,7 @@ export class EventoDetalheComponent implements OnInit {
 
     public deleteBatch(template: TemplateRef<any>, index: number) {
         this.currentBatch.id = this.batches.get(index + '.id')?.value;
-        this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+        this.modalRef = this.modalService.show(template, {class: 'modal-md'});
     }
 
 //endregion
@@ -148,8 +152,11 @@ export class EventoDetalheComponent implements OnInit {
             this.spinner.show()
             this.eventService.getById(this.eventId).subscribe(
                 (event: Evento) => {
+
                     this.event = {...event}
+
                     this.form.patchValue(this.event)
+
                     this.loadBatches();
                 },
                 (error: any) => {
@@ -249,4 +256,33 @@ export class EventoDetalheComponent implements OnInit {
         ).add(() => this.spinner.hide());
         this.spinner.hide();
     }
+
+    onFileChange(evento: any) {
+        const reader = new FileReader();
+        reader.onload = (ev: any) => this.imagemURL = ev.target.result;
+        this.file = evento.target.files;
+        // @ts-ignore
+        reader.readAsDataURL(this.file[0])
+        this.uploadImagem();
+        this.loadEvent();
+    }
+
+    uploadImagem() {
+        this.spinner.show();
+        this.eventService.urlUpload(this.eventId, this.file).subscribe(
+            () => {
+
+                this.toastr.success("Imagem alterada com sucesso", "Sucesso")
+            },
+            (e) => {
+                console.error(e);
+                this.toastr.error(e);
+            },
+            () => {
+            }
+        ).add(() => this.spinner.hide());
+    }
+
+
+
 }

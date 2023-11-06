@@ -21,41 +21,39 @@ public class LotService : ILotService
 
     public async Task AddLot(int eventId, BatchDto dto)
     {
-            var lot = _autoMapper.Map<Batch>(dto);
-            lot.EventId = eventId;
-            _generalPersist.Add(lot);
-            await _generalPersist.SaveChangesAsync();
-            
+        var lot = _autoMapper.Map<Batch>(dto);
+        lot.EventId = eventId;
+        _generalPersist.Add(lot);
+        await _generalPersist.SaveChangesAsync();
     }
 
     public async Task<BatchDto[]> Put(int eventId, BatchDto[] models)
     {
+        var lotes = _lotPersist.GetLotsByEventId(eventId);
+        var result = lotes.Result;
+        if (result == null) return null;
 
-            var lotes = _lotPersist.GetLotsByEventId(eventId);
-            if (lotes.Result == null) return null;
-            foreach (var model in models)
+        foreach (var model in models)
+        {
+            model.EventId = eventId;
+            if (model.Id == 0)
             {
-                if (model.Id == 0)
-                {
-                    await AddLot(eventId, model);
-                }
-                else
-                {
-                    await UpdateLot(eventId, lotes, model);
-                }
+                await AddLot(eventId, model);
             }
+            else
+            {
+                await UpdateLot(eventId, lotes, model);
+            }
+        }
 
-            var lotDto = await _lotPersist.GetLotsByEventId(eventId);
-            return _autoMapper.Map<BatchDto[]>(lotDto);
-        
-       
+        var lotDto = await _lotPersist.GetLotsByEventId(eventId);
+        return _autoMapper.Map<BatchDto[]>(lotDto);
     }
 
     private async Task UpdateLot(int eventId, Task<Batch[]> lotes, BatchDto model)
     {
         var lote = lotes.Result.FirstOrDefault(l => l.Id == model.Id);
         _autoMapper.Map(model, lote);
-        model.EventId = eventId;
         _generalPersist.Update(lote);
         await _generalPersist.SaveChangesAsync();
     }
@@ -71,7 +69,7 @@ public class LotService : ILotService
     public async Task<BatchDto[]> GetLotsByEventIdAsync(int eventId)
     {
         var lots = _lotPersist.GetLotsByEventId(eventId).Result;
-        return  lots == null ? null : _autoMapper.Map<BatchDto[]>(lots);
+        return lots == null ? null : _autoMapper.Map<BatchDto[]>(lots);
     }
 
 
