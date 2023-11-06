@@ -3,10 +3,8 @@ using ProEventos.Domain;
 
 namespace ProEventos.Persistence.Interfaces;
 
-public interface ISpeakerPersist
+public interface ISpeakerPersist : IGeneralPersist
 {
-    // SPEAKERS
-    Task<Speaker> GetSpeakersByNameAsync(string name, bool includeEvents);
-    Task<Speaker[]> GetAllSpeakersAsync(bool includeEvents);
+    Task<Speaker[]> GetAllSpeakersAsync(bool includeEvents = false);
     Task<Speaker> GetSpeakerByIdAsync(int speakerId, bool includeEvents);
 }

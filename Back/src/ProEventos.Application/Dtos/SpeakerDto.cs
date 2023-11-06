@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using ProEventos.Domain;
-
-namespace ProEventos.Application.Dtos;
+﻿namespace ProEventos.Application.Dtos;
 
 public class SpeakerDto
 {
