@@ -14,7 +14,7 @@ public class SocialMediaPersist : GeneralPersist, ISocialMediaPersist
         _context = context;
     }
 
-    public async Task<SocialMedia> GetSocialMediaEventoIdAsync(int eventoId, int socialMediaId)
+    public async Task<SocialMedia> GetSocialMediaEventIdAsync(int eventoId, int socialMediaId)
     {
         IQueryable<SocialMedia> query = _context.SocialMedias;
         query = query.AsQueryable().Where((socialMedia) =>
@@ -29,7 +29,7 @@ public class SocialMediaPersist : GeneralPersist, ISocialMediaPersist
         return await query.FirstOrDefaultAsync();
     }
 
-    public async Task<SocialMedia[]> GetAllSocialMediaEventoAsync(int eventoId)
+    public async Task<SocialMedia[]> GetAllSocialMediaEventAsync(int eventoId)
     {
         IQueryable<SocialMedia> queryable = _context.SocialMedias;
         queryable = queryable.AsNoTracking().Where(sm => sm.EventId == eventoId);

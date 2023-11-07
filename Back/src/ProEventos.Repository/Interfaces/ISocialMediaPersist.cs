@@ -4,11 +4,11 @@ namespace ProEventos.Persistence.Interfaces;
 
 public interface ISocialMediaPersist : IGeneralPersist
 {
-    Task<SocialMedia> GetSocialMediaEventoIdAsync(int eventoId, int socialMediaId);
+    Task<SocialMedia> GetSocialMediaEventIdAsync(int eventoId, int socialMediaId);
 
     Task<SocialMedia> GetSocialMediaSpeakerIdAsync(int speakerId, int socialMediaId);
 
-    Task<SocialMedia[]> GetAllSocialMediaEventoAsync(int eventoId);
+    Task<SocialMedia[]> GetAllSocialMediaEventAsync(int eventoId);
 
     Task<SocialMedia[]> GetAllSocialMediaSpeakerAsync(int speakerId);
 }

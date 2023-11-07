@@ -5,7 +5,7 @@ using ProEventos.Persistence.Interfaces;
 
 namespace ProEventos.Persistence.Persist;
 
-class SpeakerPersist : GeneralPersist, ISpeakerPersist
+public class SpeakerPersist : GeneralPersist, ISpeakerPersist
 {
     private ProEventosContext _context;
 

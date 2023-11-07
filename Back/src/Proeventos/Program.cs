@@ -20,6 +20,12 @@ builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IGeneralPersist, GeneralPersist>();
 builder.Services.AddScoped<IEventPersist, EventPersist>();
 builder.Services.AddScoped<ILotPersist, LotPersist>();
+
+builder.Services.AddScoped<ISpeakerPersist, SpeakerPersist>();
+builder.Services.AddScoped<ISpeakerService, SpeakerService>();
+builder.Services.AddScoped<ISocialMediaPersist, SocialMediaPersist>();
+builder.Services.AddScoped<ISocialMediaService, SocialMediaService>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ProEventosContext>(

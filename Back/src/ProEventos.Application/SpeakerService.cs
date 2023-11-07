@@ -17,22 +17,14 @@ public class SpeakerService : ISpeakerService
         _autoMapper = autoMapper;
     }
 
-    public async Task<SpeakerDto> Add(SpeakerDto dto, int speakerId)
+    public async Task<SpeakerDto> Add(SpeakerDto dto)
     {
-        try
+        var speaker = _autoMapper.Map<Speaker>(dto);
+        _speakerPersist.Add(speaker);
+        if (await _speakerPersist.SaveChangesAsync())
         {
-            var speaker = _autoMapper.Map<Speaker>(dto);
-            _speakerPersist.Add(speaker);
-            if (await _speakerPersist.SaveChangesAsync())
-            {
-                var spkr = await _speakerPersist.GetSpeakerByIdAsync(speakerId);
-                return _autoMapper.Map<SpeakerDto>(spkr);
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
+            var spkr = await _speakerPersist.GetSpeakerByIdAsync(speaker.Id);
+            return _autoMapper.Map<SpeakerDto>(spkr);
         }
 
         return null;
@@ -47,8 +39,10 @@ public class SpeakerService : ISpeakerService
             return null;
         }
 
-        _autoMapper.Map(dto, speaker);
-        _speakerPersist.Update(speaker);
+
+        var editado = _autoMapper.Map(dto, speaker);
+        editado.Id = speakerId;
+        _speakerPersist.Update(editado);
         if (await _speakerPersist.SaveChangesAsync())
         {
             var speakerReturn = await _speakerPersist.GetSpeakerByIdAsync(speakerId);
@@ -58,13 +52,6 @@ public class SpeakerService : ISpeakerService
         return null;
     }
 
-    public async Task<bool> Delete(int speakerId)
-    {
-        var speaker = await _speakerPersist.GetSpeakerByIdAsync(speakerId);
-        if (speaker == null) throw new Exception($"Cant find a speaker with id: {speakerId}");
-        _speakerPersist.Delete(speaker);
-        return await _speakerPersist.SaveChangesAsync();
-    }
 
     public async Task<SpeakerDto[]> GetAll()
     {
@@ -81,5 +68,13 @@ public class SpeakerService : ISpeakerService
         }
 
         return _autoMapper.Map<SpeakerDto>(speaker);
+    }
+
+    public async Task<bool> Delete(int id)
+    {
+        var evento = await _speakerPersist.GetSpeakerByIdAsync(id);
+        if (evento == null) throw new Exception("Event with this id not found");
+        _speakerPersist.Delete(evento);
+        return await _speakerPersist.SaveChangesAsync();
     }
 }
