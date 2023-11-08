@@ -33,6 +33,8 @@ import {ptBrLocale} from 'ngx-bootstrap/locale';
 import {NgxCurrencyDirective} from "ngx-currency";
 import {TabsModule} from "ngx-bootstrap/tabs";
 import { PerfilDetalheComponent } from './components/user/perfil/perfil-detalhe/perfil-detalhe/perfil-detalhe.component';
+import { PalestranteListaComponent } from './components/palestrantes/palestrante-lista/palestrante-lista/palestrante-lista.component';
+import { PalestranteComponentComponent } from './components/palestrantes/palestrante-detalhe/palestrante-component/palestrante-component.component';
 
 defineLocale('pt-br', ptBrLocale)
 
@@ -53,6 +55,8 @@ defineLocale('pt-br', ptBrLocale)
     LoginComponent,
     RegistrationComponent,
     PerfilDetalheComponent,
+    PalestranteListaComponent,
+    PalestranteComponentComponent,
   ],
   imports: [
     BrowserModule,

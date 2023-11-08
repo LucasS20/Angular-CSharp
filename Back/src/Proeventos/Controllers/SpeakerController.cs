@@ -15,7 +15,7 @@ public class SpeakerController : ControllerBase
         _iSpeakerService = iSpeakerService;
     }
 
-    [HttpGet("GetAll")]
+    [HttpGet]
     public async Task<IActionResult> GetAllSpeakers()
     {
         try
@@ -63,14 +63,14 @@ public class SpeakerController : ControllerBase
         }
     }
 
-    [HttpPut("update/{speakerId}")]
+    [HttpPut("{speakerId}")]
     public async Task<IActionResult> Update(int speakerId, [FromBody] SpeakerDto model)
     {
         try
         {
-            var evento = await _iSpeakerService.Update(model, speakerId);
-            if (evento == null) return NoContent();
-            return Ok(evento);
+            var speakerDto = await _iSpeakerService.Update(model, model.Id);
+            if (speakerDto == null) return NoContent();
+            return Ok(speakerDto);
         }
         catch (Exception e)
         {

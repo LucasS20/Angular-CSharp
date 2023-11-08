@@ -15,8 +15,7 @@ import {Router} from "@angular/router";
 export class EventoListagemComponent implements OnInit {
   modalRef?: BsModalRef;
   events: Evento[] = []
-  widthImage: number = 50;
-  margin: number = 10;
+
   showImage: boolean = true;
   filteredEvents: Evento[] = [];
   _listFilter: string = '';

@@ -10,6 +10,9 @@ import {EventoListagemComponent} from "./components/eventos/evento-listagem/even
 import {UserComponent} from "./components/user/user.component";
 import {LoginComponent} from "./components/user/login/login.component";
 import {RegistrationComponent} from "./components/user/registration/registration.component";
+import {
+  PalestranteListaComponent
+} from "./components/palestrantes/palestrante-lista/palestrante-lista/palestrante-lista.component";
 
 const routes: Routes = [
   {
@@ -32,7 +35,7 @@ const routes: Routes = [
   },
   {path: 'dashboard', component: DashboardComponent},
 
-  {path: 'palestrante', component: PalestrantesComponent},
+  {path: 'palestrantes', component: PalestrantesComponent},
   {path: 'contatos', component: ContatosComponent},
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   {path: '**', redirectTo: 'dashboard', pathMatch: 'full'}

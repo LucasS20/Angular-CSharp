@@ -3,12 +3,12 @@ import {EventSpeaker} from "./EventSpeaker";
 
 
 export interface Speaker {
-  Id: number;
-  Name: string;
-  Resume: string;
-  ImageURL: string;
+  id: number;
+  name: string;
+  resume: string;
+  imageURL: string;
   phone: string;
   email: string;
-  SocialMedias: SocialMedia[];
-  EventSpeakers: EventSpeaker;
+  socialMedias: SocialMedia[];
+  eventSpeakers: EventSpeaker;
 }

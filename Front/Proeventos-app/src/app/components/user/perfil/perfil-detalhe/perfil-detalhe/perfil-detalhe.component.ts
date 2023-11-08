@@ -41,7 +41,6 @@ export class PerfilDetalheComponent {
         return this.form.controls;
     }
 
-    protected readonly onsubmit = onsubmit;
 
     private verifyForm() {
         this.form.valueChanges.subscribe(
