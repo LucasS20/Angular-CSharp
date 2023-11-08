@@ -6,13 +6,13 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text rounded-0">Filter</div>
                 </div>
-                <input type="text" class="form-control  " placeholder="Search" [(ngModel)]="speakerFilter">
+                <input type="text" class="form-control " placeholder="Search" [(ngModel)]="speakerFilter">
             </div>
         </div>
     </div>
     <div *ngIf="speakers&& speakers.length">
         <div class="row">
-            <div class="col-md-4 mb-4 d-flex " *ngFor="let s of speakers">
+            <div class="col-md-4 mb-4 d-flex " *ngFor="let s of filteredSpeakers">
 
                 <div class="card mb-3 ">
                     <div class="d-flex align-self-center pt-2">

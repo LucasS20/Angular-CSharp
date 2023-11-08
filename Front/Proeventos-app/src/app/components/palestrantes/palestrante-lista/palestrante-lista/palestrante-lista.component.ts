@@ -28,7 +28,7 @@ export class PalestranteListaComponent {
         this.speakers = [];
     }
 
-    public set listFilter(value: string) {
+     set listFilter(value: string) {
         this.speakerFilter = value;
         value = value.toLowerCase();
         this.filteredSpeakers = this.speakerFilter ? this.speakers.filter((s: Speaker) => s.name.toLowerCase().includes(value) || s.email.toLowerCase().includes(value)) : this.speakers;

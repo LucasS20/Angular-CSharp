@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PalestranteComponentComponent } from './palestrante-component.component';
+import { PalestranteDetalheComponent } from './palestrante-detalhe.component';
 
 describe('PalestranteComponentComponent', () => {
-  let component: PalestranteComponentComponent;
-  let fixture: ComponentFixture<PalestranteComponentComponent>;
+  let component: PalestranteDetalheComponent;
+  let fixture: ComponentFixture<PalestranteDetalheComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PalestranteComponentComponent]
+      declarations: [PalestranteDetalheComponent]
     });
-    fixture = TestBed.createComponent(PalestranteComponentComponent);
+    fixture = TestBed.createComponent(PalestranteDetalheComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
