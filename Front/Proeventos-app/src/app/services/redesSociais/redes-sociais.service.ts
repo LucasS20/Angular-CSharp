@@ -12,11 +12,11 @@ export class RedesSociaisService {
     }
 
     public getAllByEventId(eventId: number) {
-        return this.http.get<RedesSociais>(`${this.baseURL}/GetAllByEventId/${eventId}`)
+        return this.http.get<RedesSociais[]>(`${this.baseURL}/GetAllByEventId/${eventId}`)
     }
 
     public getAllByPalestranteId(palestranteId: number) {
-        return this.http.get<RedesSociais>(`${this.baseURL}/GetAllBySpeakerId/${palestranteId}`)
+        return this.http.get<RedesSociais[]>(`${this.baseURL}/GetAllBySpeakerId/${palestranteId}`)
     }
 
     public getByPalestranteId(palestranteId: number, socialMediaId: number) {
@@ -37,6 +37,9 @@ export class RedesSociaisService {
 
     public saveOnSpeaker(speakerId: number, socialMedias: RedesSociais[]) {
         return this.http.put<RedesSociais>(`${this.baseURL}/SaveOnSpeaker/${speakerId}`, socialMedias)
+    }
+    public saveOnEvento(eventoId: number, socialMedias: RedesSociais[]) {
+        return this.http.put<RedesSociais>(`${this.baseURL}/SaveOnEvent/${eventoId}`, socialMedias)
     }
 
 }

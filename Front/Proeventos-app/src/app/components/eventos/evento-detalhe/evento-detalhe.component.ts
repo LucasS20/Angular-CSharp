@@ -9,7 +9,6 @@ import {ToastrService} from "ngx-toastr";
 import {Batch} from "../../../models/Batch";
 import {BatchService} from "../../../services/batch/batch.service";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {DateFormatPipe} from "../../../helpers/dateFormat.pipe";
 
 @Component({
     selector: 'app-evento-detalhe',
@@ -24,8 +23,6 @@ export class EventoDetalheComponent implements OnInit {
     currentBatch = {id: 0, name: '', index: 0};
     imagemURL = 'assets/uploadCloud.svg';
     file: File;
-     readonly DateFormatPipe = DateFormatPipe;
-
     constructor(private fb: FormBuilder,
                 private localeService: BsLocaleService,
                 private activatedRoute: ActivatedRoute,
