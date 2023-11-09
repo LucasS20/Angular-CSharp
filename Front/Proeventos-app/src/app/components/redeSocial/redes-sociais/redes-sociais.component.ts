@@ -71,7 +71,7 @@ export class RedesSociaisComponent {
     }
 
     public get socialMedias(): FormArray {
-        return this.formRS.get('redesSociais') as FormArray
+        return this.formRS.get('socialMedias') as FormArray
     }
 
 
