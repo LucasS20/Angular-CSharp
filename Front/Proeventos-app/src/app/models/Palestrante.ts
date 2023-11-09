@@ -2,7 +2,7 @@ import {SocialMedia} from "./SocialMedia";
 import {EventSpeaker} from "./EventSpeaker";
 
 
-export interface Speaker {
+export interface Palestrante {
   id: number;
   name: string;
   resume: string;

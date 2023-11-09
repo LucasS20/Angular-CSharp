@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {Speaker} from "../../../../models/Speaker";
+import {Palestrante} from "../../../../models/Palestrante";
 import {ToastrService} from "ngx-toastr";
-import {SpeakerService} from "../../../../services/speaker/speaker.service";
+import {PalestranteService} from "../../../../services/speaker/palestrante.service";
 import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
@@ -12,7 +12,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 export class PalestranteListaComponent {
     speakerFilter: any;
     filteredSpeakers: any;
-    speakers: Speaker[];
+    speakers: Palestrante[];
 
     public ngOnInit(): void {
         this.spinner.show();
@@ -24,20 +24,20 @@ export class PalestranteListaComponent {
         this.loadSpeakers();
     }
 
-    constructor(private toastrService: ToastrService, private service: SpeakerService, private spinner: NgxSpinnerService) {
+    constructor(private toastrService: ToastrService, private service: PalestranteService, private spinner: NgxSpinnerService) {
         this.speakers = [];
     }
 
      set listFilter(value: string) {
         this.speakerFilter = value;
         value = value.toLowerCase();
-        this.filteredSpeakers = this.speakerFilter ? this.speakers.filter((s: Speaker) => s.name.toLowerCase().includes(value) || s.email.toLowerCase().includes(value)) : this.speakers;
+        this.filteredSpeakers = this.speakerFilter ? this.speakers.filter((s: Palestrante) => s.name.toLowerCase().includes(value) || s.email.toLowerCase().includes(value)) : this.speakers;
     }
 
 
     public loadSpeakers(): void {
         this.service.getAll().subscribe({
-                next: (speakers: Speaker[]) => {
+                next: (speakers: Palestrante[]) => {
                     console.log(speakers);
                     this.speakers = speakers;
                     this.filteredSpeakers = speakers;

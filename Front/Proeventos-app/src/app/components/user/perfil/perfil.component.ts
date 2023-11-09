@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {NgxSpinnerService} from "ngx-spinner";
+import {Palestrante} from "../../../models/Palestrante";
+
 
 @Component({
   selector: 'app-perfil',
@@ -8,23 +11,20 @@ import {Component, OnInit} from '@angular/core';
 export class PerfilComponent implements OnInit {
 
   public formValue: any = {};
-
-
-  constructor() {
-  }
+  constructor(private spinner: NgxSpinnerService) {}
 
   ngOnInit() {
-
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 500);
   }
 
   public setFormValue($event: any) {
     this.formValue = $event;
-    console.log($event);
   }
 
   public isSpeaker(): boolean {
     return this.formValue.userFunction === 'Palestrante'
   }
-
-
 }

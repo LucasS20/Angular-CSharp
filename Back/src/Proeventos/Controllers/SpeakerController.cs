@@ -21,8 +21,7 @@ public class SpeakerController : ControllerBase
         try
         {
             var speakers = await _iSpeakerService.GetAll();
-            if (speakers == null) return NoContent();
-            return Ok(speakers);
+            return (speakers == null) ? NoContent() : Ok(speakers);
         }
         catch (Exception e)
         {
@@ -37,8 +36,7 @@ public class SpeakerController : ControllerBase
         try
         {
             var evento = await _iSpeakerService.GetById(id);
-            if (evento == null) return NoContent();
-            return Ok(evento);
+            return evento == null ? NoContent() : Ok(evento);
         }
         catch (Exception e)
         {
@@ -54,8 +52,7 @@ public class SpeakerController : ControllerBase
         try
         {
             var speaker = await _iSpeakerService.Add(dto);
-            if (speaker == null) return NoContent();
-            return Ok(speaker.Id);
+            return speaker == null ? NoContent() : Ok(speaker.Id);
         }
         catch (Exception e)
         {
@@ -69,8 +66,7 @@ public class SpeakerController : ControllerBase
         try
         {
             var speakerDto = await _iSpeakerService.Update(model, model.Id);
-            if (speakerDto == null) return NoContent();
-            return Ok(speakerDto);
+            return speakerDto == null ? NoContent() : Ok(speakerDto);
         }
         catch (Exception e)
         {

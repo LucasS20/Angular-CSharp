@@ -1,0 +1,12 @@
+<div class="form" [formGroup]="form">
+  <div class="form-group">
+    <label>Minicurriculo</label>
+    <textarea type="text" formControlName="miniCurriculo" class="form-control"
+              [ngClass]="cssValidator(getControls?.miniCurriculo)" id="" cols="30"
+              rows="10">
+            </textarea>
+    <small class="form-text" [ngClass]="corDaDescricao">
+      {{formSituation}}
+    </small>
+  </div>
+</div>

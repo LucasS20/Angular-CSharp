@@ -1,6 +1,10 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {AbstractControlOptions, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ValidatorPasswordField} from "../../../../../helpers/ValidatorPasswordField";
+import {PalestranteService} from "../../../../../services/speaker/palestrante.service";
+import {Palestrante} from "../../../../../models/Palestrante";
+import {ToastrService} from "ngx-toastr";
+import {NgxSpinnerService, Spinner} from "ngx-spinner";
 
 @Component({
     selector: 'app-perfil-detalhe',
@@ -8,14 +12,21 @@ import {ValidatorPasswordField} from "../../../../../helpers/ValidatorPasswordFi
     styleUrls: ['./perfil-detalhe.component.scss']
 })
 export class PerfilDetalheComponent {
-    @Output() changeFormValue = new EventEmitter;
+    @Output() changeFormValue: EventEmitter<any> = new EventEmitter;
+    @Input() speakerId: number = 1;
     public form: FormGroup;
+    palestrante: Palestrante;
 
-    constructor(private formBuilder: FormBuilder) {
-        this.form = new FormGroup<any>({});
+    constructor(private formBuilder: FormBuilder,
+                private palestranteService: PalestranteService,
+                private toastr: ToastrService,
+                private spinner: NgxSpinnerService) {
+        this.form = {} as FormGroup;
+        this.palestrante = {} as Palestrante;
     }
 
     ngOnInit() {
+        this.form = this.formBuilder.group({});
         this.validate();
         this.verifyForm();
     }
@@ -24,14 +35,13 @@ export class PerfilDetalheComponent {
         const formOptions: AbstractControlOptions = {validators: ValidatorPasswordField.MustMatch('password', 'confirmPassword')}
         const specialCharacterPattern = /[\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\]\{\};:\'",<>\.\?\/\\|]/;
         this.form = this.formBuilder.group({
-
             tittle: ['', [Validators.required]],
             firstName: ['', Validators.required],
             secondName: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
             phone: ['', Validators.required],
             userFunction: ['', Validators.required],
-            description: ['', Validators.required],
+            resume: ['', Validators.required],
             password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern(specialCharacterPattern)]],
             confirmPassword: ['', [Validators.required]],
         }, formOptions)
@@ -46,6 +56,41 @@ export class PerfilDetalheComponent {
         this.form.valueChanges.subscribe(
             () => {
                 this.changeFormValue.emit({...this.form.value})
+            },)
+        this.palestranteService.getById(this.speakerId).subscribe(
+            (speaker: Palestrante) => {
+                this.palestrante = speaker;
+
+                const names = speaker.name.split(' ');
+                const firstName = names[0];
+                const secondName = names.slice(1).join(' ');
+
+                this.form.patchValue({
+                    ...speaker,
+                    firstName: firstName,
+                    secondName: secondName
+                });
+            }, () => {
+            },
+            () => {
+            }
+        )
+    }
+
+    saveSpeaker() {
+        this.palestrante = this.form.value;
+        this.palestrante.id=this.speakerId;
+        this. palestrante.name = `${this.form.value.firstName} ${this.form.value.secondName}`;
+        console.log(this.palestrante);
+        this.palestranteService.update(this.palestrante).subscribe(
+            () => {
+                this.toastr.success("Deu bom")
+            },
+            (e) => {
+                this.toastr.error(e)
+                console.log(e)
+            },
+            () => {
             },)
     }
 }

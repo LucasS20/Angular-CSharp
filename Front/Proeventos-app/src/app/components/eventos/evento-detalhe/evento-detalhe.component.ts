@@ -99,8 +99,6 @@ export class EventoDetalheComponent implements OnInit {
 
         if (this.getControls['batches'].valid) {
             this.spinner.show();
-            console.log(this.form.value['batches'])
-            console.log(this.eventId);
             this.batchService.saveBatch(this.eventId, this.form.value['batches']).subscribe(
                 () => {
                     this.toastr.success("Lotes salvos com sucesso!", 'Sucesso!')

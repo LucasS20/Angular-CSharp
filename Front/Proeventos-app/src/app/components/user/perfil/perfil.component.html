@@ -38,6 +38,7 @@
       <div class="card"></div>
     </div>
   </div>
+
   <div class="col-lg-9">
     <div>
       <tabset>
@@ -50,9 +51,8 @@
         <tab *ngIf="isSpeaker()">
           <ng-template tabHeading>
             <i class="fa fa-user me-2"></i><span>Palestrante</span>
-
           </ng-template>
-          <app-palestrante-detalhe></app-palestrante-detalhe>
+          <app-palestrante-detalhe [palestranteId]="1"></app-palestrante-detalhe>
         </tab>
         <tab *ngIf="isSpeaker()">
           <ng-template tabHeading>
@@ -62,7 +62,6 @@
       </tabset>
     </div>
   </div>
-
 
 </div>
 
