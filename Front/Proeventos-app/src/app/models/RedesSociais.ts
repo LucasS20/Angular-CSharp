@@ -1,6 +1,6 @@
 import {Palestrante} from "./Palestrante";
 
-export interface SocialMedia {
+export interface RedesSociais {
   Id: number;
   Name: string;
   Url: string;
