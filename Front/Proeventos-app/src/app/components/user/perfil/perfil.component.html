@@ -1,68 +1,68 @@
 <app-titulo [tittle]="'Perfil'"></app-titulo>
 
 <div class="row pt-2">
-  <div class="col-lg-3 pt-1">
-    <div class="card mb-3 ">
-      <div class="d-flex align-self-center pt-2">
-        <a>
-          <img
-            ngSrc="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R"
-            width="120" height="120" class="rounded-circle" alt="">
-        </a>
-      </div>
-      <div class="card-title px-4 my-3">
-        <div class="h4 text-center mb-3">{{formValue.email}}</div>
-        <div class="h7 text-bold pb-1"><b>Name: </b>{{formValue.firstName}} {{formValue.secondName}}</div>
-        <div class="h7 text-bold pb-1"><b>Titulo: </b>{{formValue.tittle}} </div>
-        <div class="h7 text-bold pb-1">{{formValue.phone}} </div>
+    <div class="col-lg-3 pt-1">
+        <div class="card mb-3 ">
+            <div class="d-flex align-self-center pt-2">
+                <a>
+                    <img
+                            ngSrc="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R"
+                            width="120" height="120" class="rounded-circle" alt="">
+                </a>
+            </div>
+            <div class="card-title px-4 my-3">
+                <div class="h4 text-center mb-3">{{formValue.email}}</div>
+                <div class="h7 text-bold pb-1"><b>Name: </b>{{formValue.firstName}} {{formValue.secondName}}</div>
+                <div class="h7 text-bold pb-1"><b>Titulo: </b>{{formValue.tittle}} </div>
+                <div class="h7 text-bold pb-1">{{formValue.phone}} </div>
 
-        <div class="h7">
-          {{formValue.description}}
+                <div class="h7">
+                    {{formValue.description}}
+                </div>
+                <div class="h7"></div>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item my-2">
+                    <div class="row">
+                        <div class="col-6 text-center border-right">
+                            <div class="h5">TROCAR</div>
+                            <div class="h6 text-muted">Eventos Ministrados</div>
+                        </div>
+                        <div class="col-6 text-center">
+                            <div class="h5">TROCAR</div>
+                            <div class="h6 text-muted">Eventos Participados</div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="card"></div>
         </div>
-        <div class="h7"></div>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item my-2">
-          <div class="row">
-            <div class="col-6 text-center border-right">
-              <div class="h5">1342</div>
-              <div class="h6 text-muted">Eventos Ministrados</div>
-            </div>
-            <div class="col-6 text-center">
-              <div class="h5">1342</div>
-              <div class="h6 text-muted">Eventos Participados</div>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <div class="card"></div>
     </div>
-  </div>
 
-  <div class="col-lg-9">
-    <div>
-      <tabset>
-        <tab class="border ">
-          <ng-template tabHeading>
-            <i class="fa fa-address-card me-2"></i><span>Perfil</span>
-          </ng-template>
-          <app-perfil-detalhe (changeFormValue)="setFormValue($event)"></app-perfil-detalhe>
-        </tab>
-        <tab *ngIf="isSpeaker()">
-          <ng-template tabHeading>
-            <i class="fa fa-user me-2"></i><span>Palestrante</span>
-          </ng-template>
-          <app-palestrante-detalhe [palestranteId]="1"></app-palestrante-detalhe>
-        </tab>
-        <tab *ngIf="isSpeaker()">
-          <ng-template tabHeading>
-            <i class="fa-brands fa-twitter me-2"></i><span>Rede Social</span>
-          </ng-template>
-          <app-redes-sociais></app-redes-sociais>
-        </tab>
-      </tabset>
+    <div class="col-lg-9">
+        <div>
+            <tabset>
+                <tab class="border ">
+                    <ng-template tabHeading>
+                        <i class="fa fa-address-card me-2"></i><span>Perfil</span>
+                    </ng-template>
+                    <app-perfil-detalhe (changeFormValue)="setFormValue($event)"></app-perfil-detalhe>
+                </tab>
+                <tab *ngIf="isSpeaker()">
+                    <ng-template tabHeading>
+                        <i class="fa fa-user me-2"></i><span>Palestrante</span>
+                    </ng-template>
+                    <app-palestrante-detalhe [palestranteId]="1"></app-palestrante-detalhe>
+                </tab>
+                <tab *ngIf="isSpeaker()">
+                    <ng-template tabHeading>
+                        <i class="fa-brands fa-twitter me-2"></i><span>Rede Social</span>
+                    </ng-template>
+                    <app-redes-sociais [speakerId]="1"></app-redes-sociais>
+                </tab>
+            </tabset>
+        </div>
     </div>
-  </div>
 
 </div>
 

@@ -1,7 +1,7 @@
-import {Component, TemplateRef} from '@angular/core';
+import {Component, Input, TemplateRef} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {RedesSociais} from "../../../models/RedesSociais";
+import {RedeSocial} from "../../../models/RedesSociais";
 import {RedesSociaisService} from "../../../services/redesSociais/redes-sociais.service";
 import {NgxSpinnerService} from "ngx-spinner";
 import {ToastrService} from "ngx-toastr";
@@ -13,10 +13,11 @@ import {Router} from "@angular/router";
     styleUrls: ['./redes-sociais.component.scss']
 })
 export class RedesSociaisComponent {
+    @Input() speakerId: number = -1;
+    @Input() eventoId = 0;
     public formRS: FormGroup = {} as FormGroup;
-    public redeSocialAtual = {id: 0, name: '', index: ''}
-    public redesSociais: RedesSociais[] = [];
-    public eventoId = 0
+    public redeSocialAtual = {id: 0, name: '', index: 0}
+    public redesSociais: RedeSocial[] = [];
 
 
     constructor(private formbuilder: FormBuilder,
@@ -28,8 +29,8 @@ export class RedesSociaisComponent {
                 private modalService: BsModalService) {
     }
 
-    retornaTitulo(nome: string): string {
-        return nome === null || nome === '' ? 'Nome do Lote' : nome;
+    retornaTitulo(name: string): string {
+        return name === null || name === '' ? 'Nome do Lote' : name;
     }
 
     public cssValidator(campo: FormControl | AbstractControl | null) {
@@ -37,7 +38,7 @@ export class RedesSociaisComponent {
     }
 
     adicionarRedeSocial() {
-        this.socialMedias.push(this.createSocialMedia({id: 0} as RedesSociais))
+        this.socialMediaArray.push(this.createSocialMedia({id: 0} as RedeSocial))
     }
 
     salvarRedesSociais() {
@@ -45,14 +46,30 @@ export class RedesSociaisComponent {
     }
 
     confirmDeleteRedeSocial() {
+        this.modalRef.hide();
+        this.spinner.show();
+        this.service.deleteOnSpeaker(this.speakerId, this.redeSocialAtual.id).subscribe(
+            () => {
 
+                this.toastr.success("Lote deletado com sucesso", "Deletado")
+                this.socialMediaArray.removeAt(this.redeSocialAtual.index);
+            },
+            (e) => {
+                console.error(e)
+                this.toastr.error("Erro ao deletar", "Erro")
+            },
+            () => {
+            }
+        ).add(() => this.spinner.hide());
+        this.spinner.hide();
     }
 
     declineDeleteRedeSocial() {
     }
 
     removerRedeSocial(template: TemplateRef<any>, index: number) {
-        this.redeSocialAtual.id = this.socialMedias.get(index + '.id')?.value;
+        //@ts-ignore
+        this.redeSocialAtual.id = this.socialMediaArray.get(index + '.id').value;
         this.modalRef = this.modalService.show(template, {class: 'modal-md'});
     }
 
@@ -63,24 +80,25 @@ export class RedesSociaisComponent {
     }
 
     ngOnInit() {
-        this.validation()
+        this.validation();
+        this.loadSocialMedias();
     }
 
     get getControls() {
         return this.formRS.controls
     }
 
-    public get socialMedias(): FormArray {
-        return this.formRS.get('socialMedias') as FormArray
+    public get socialMediaArray(): FormArray {
+        return this.formRS.get('redesSociais') as FormArray
     }
 
 
     private saveOnEvento() {
-        if (this.getControls['batches'].valid) {
+        if (this.getControls['redesSociais'].valid) {
             this.spinner.show().then();
-            this.service.saveOnEvento(this.eventoId, this.formRS.value['socialMedias']).subscribe(
+            this.service.saveOnEvento(this.eventoId, this.formRS.value['socialMediaArray']).subscribe(
                 () => {
-                    this.toastr.success("Lotes salvos com sucesso!", 'Sucesso!')
+                    this.toastr.success("Lotes salvos com sucesso!", 'Success!')
                     this.router.navigate([`eventos/detalhe/${this.eventoId}`]).then();
                 },
                 (error: any) => {
@@ -97,12 +115,12 @@ export class RedesSociaisComponent {
     }
 
     private saveOnPalestrante() {
-        if (this.getControls['batches'].valid) {
+        if (this.getControls['redesSociais'].valid) {
             this.spinner.show().then();
-            this.service.saveOnSpeaker(this.eventoId, this.formRS.value['socialMedias']).subscribe(
+
+            this.service.saveOnSpeaker(this.speakerId, this.formRS.value['redesSociais']).subscribe(
                 () => {
                     this.toastr.success("Lotes salvos com sucesso!", 'Sucesso!')
-                    this.router.navigate([`eventos/detalhe/${this.eventoId}`]);
                 },
                 (error: any) => {
                     this.toastr.error("Error ao tentar salvar lotes", 'Error');
@@ -122,14 +140,15 @@ export class RedesSociaisComponent {
     }
 
     private isEvento() {
-        return this.eventoId !== 0 || this.eventoId !== null
+        return this.eventoId !== 0 && this.eventoId !== null
     }
 
     private loadBySpeaker() {
-        this.service.getAllByPalestranteId(this.eventoId).subscribe(
+        this.service.getAllByPalestranteId(this.speakerId).subscribe(
             (socialMedias) => {
-                socialMedias.forEach(b => this.socialMedias.push(this.createSocialMedia(b)))
-            },
+                socialMedias.forEach(b => this.socialMediaArray.push(this.createSocialMedia(b)))
+            }
+            ,
             (error) => {
                 console.error(error)
                 this.toastr.error("Erro ao carregar os lotes")
@@ -141,8 +160,8 @@ export class RedesSociaisComponent {
 
     private loadByEvent() {
         this.service.getAllByEventId(this.eventoId).subscribe(
-            (batches: RedesSociais[]) => {
-                batches.forEach(b => this.socialMedias.push(this.createSocialMedia(b)))
+            (batches: RedeSocial[]) => {
+                batches.forEach(b => this.socialMediaArray.push(this.createSocialMedia(b)))
             },
             (error) => {
                 console.error(error)
@@ -154,12 +173,12 @@ export class RedesSociaisComponent {
     }
 
 
-    private createSocialMedia(batch: RedesSociais):
+    private createSocialMedia(socialMedia: RedeSocial):
         FormGroup {
         return this.formbuilder.group({
-            id: [batch.id],
-            name: [batch.name, Validators.required],
-            url: [batch.url, Validators.required],
+            id: [socialMedia.id],
+            name: [socialMedia.name, Validators.required],
+            url: [socialMedia.url, Validators.required],
         })
     }
 

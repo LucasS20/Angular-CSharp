@@ -19,7 +19,7 @@ public class LotService : ILotService
         _autoMapper = autoMapper;
     }
 
-    public async Task AddLot(int eventId, BatchDto dto)
+    private async Task AddLot(int eventId, BatchDto dto)
     {
         var lot = _autoMapper.Map<Batch>(dto);
         lot.EventId = eventId;
@@ -42,7 +42,7 @@ public class LotService : ILotService
             }
             else
             {
-                await UpdateLot( lotes, model);
+                await UpdateLot(lotes, model);
             }
         }
 
@@ -50,7 +50,7 @@ public class LotService : ILotService
         return _autoMapper.Map<BatchDto[]>(lotDto);
     }
 
-    private async Task UpdateLot( Task<Batch[]> lotes, BatchDto model)
+    private async Task UpdateLot(Task<Batch[]> lotes, BatchDto model)
     {
         var lote = lotes.Result.FirstOrDefault(l => l.Id == model.Id);
         _autoMapper.Map(model, lote);
@@ -68,15 +68,14 @@ public class LotService : ILotService
 
     public async Task<BatchDto[]> GetLotsByEventIdAsync(int eventId)
     {
-        var batches = _lotPersist.GetLotsByEventId(eventId).Result;
-        return  batches ==  null ? null :  _autoMapper.Map<BatchDto[]>(batches);
+        var batches = await _lotPersist.GetLotsByEventId(eventId);
+        return batches == null ? null : _autoMapper.Map<BatchDto[]>(batches);
     }
 
 
     public async Task<BatchDto> GetLotByIdsAsync(int eventId, int lotId)
     {
         var lot = await _lotPersist.GetLotByIdsAsync(eventId, lotId);
-        if (lot == null) return null;
-        return _autoMapper.Map<BatchDto>(lot);
+        return lot == null ? null : _autoMapper.Map<BatchDto>(lot);
     }
 }

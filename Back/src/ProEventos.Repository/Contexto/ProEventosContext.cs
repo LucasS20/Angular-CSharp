@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProEventos.Domain;
 
 namespace ProEventos.Persistence.Contexto;
@@ -10,7 +9,6 @@ public class ProEventosContext : DbContext
     public DbSet<Event> Events { get; set; }
     public DbSet<Batch> Batches { get; set; }
     public DbSet<Speaker> Speakers { get; set; }
-    public DbSet<EventSpeaker> EventSpeakers { get; set; }
     public DbSet<SocialMedia> SocialMedias { get; set; }
 
 
@@ -21,8 +19,6 @@ public class ProEventosContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<EventSpeaker>()
-            .HasKey(pe => new { pe.EventId, pe.SpeakerId });
         modelBuilder.Entity<Event>()
             .HasMany(e => e.SocialMedias)
             .WithOne(sm => sm.Event)
@@ -31,5 +27,10 @@ public class ProEventosContext : DbContext
             .HasMany(s => s.SocialMedias)
             .WithOne(sm => sm.Speaker)
             .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Speaker>()
+            .HasMany(s => s.Events)
+            .WithOne(e => e.Speaker)
+            .OnDelete(DeleteBehavior.Cascade);
+        
     }
 }

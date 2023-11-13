@@ -1,4 +1,4 @@
-import {RedesSociais} from "./RedesSociais";
+import {RedeSocial} from "./RedesSociais";
 import {EventSpeaker} from "./EventSpeaker";
 
 
@@ -9,6 +9,7 @@ export interface Palestrante {
   imageURL: string;
   phone: string;
   email: string;
-  socialMedias: RedesSociais[];
+  socialMedias: RedeSocial[];
   eventSpeakers: EventSpeaker;
+  eventos: Event[];
 }

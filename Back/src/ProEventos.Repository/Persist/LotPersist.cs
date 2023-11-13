@@ -7,7 +7,7 @@ namespace ProEventos.Persistence.Persist;
 
 public class LotPersist : ILotPersist
 {
-    private ProEventosContext _context;
+    private readonly ProEventosContext _context;
 
     public LotPersist(ProEventosContext context)
     {
@@ -17,18 +17,11 @@ public class LotPersist : ILotPersist
 
     public async Task<Batch[]> GetLotsByEventId(int eventoId)
     {
-        try
-        {
-            IQueryable<Batch> queryable = _context.Batches;
+        IQueryable<Batch> queryable = _context.Batches;
 
-            queryable = queryable.AsNoTracking().Where(l => l.EventId == eventoId);
+        queryable = queryable.AsNoTracking().Where(l => l.EventId == eventoId);
 
-            return queryable.ToArray();
-        }
-        catch (Exception e)
-        {
-            throw new Exception(e.InnerException.Message);
-        }
+        return await queryable.ToArrayAsync();
     }
 
     public async Task<Batch> GetLotByIdsAsync(int eventoId, int lotId)

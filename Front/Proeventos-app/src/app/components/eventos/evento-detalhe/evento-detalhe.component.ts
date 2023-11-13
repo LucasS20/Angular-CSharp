@@ -23,6 +23,7 @@ export class EventoDetalheComponent implements OnInit {
     currentBatch = {id: 0, name: '', index: 0};
     imagemURL = 'assets/uploadCloud.svg';
     file: File;
+
     constructor(private fb: FormBuilder,
                 private localeService: BsLocaleService,
                 private activatedRoute: ActivatedRoute,
@@ -169,7 +170,6 @@ export class EventoDetalheComponent implements OnInit {
     public saveEvent() {
         this.spinner.show();
 
-
         if (this.form.valid) {
             if (this.saveStatus === 'post') {
                 this.event = {...this.form.value}
@@ -184,11 +184,9 @@ export class EventoDetalheComponent implements OnInit {
                 this.event.socialMedias = sm
             }
 
-
             // @ts-ignore
             this.eventService[this.saveStatus](this.event).subscribe(
                 (evento: Evento) => {
-
                     this.toastr.success('Event saved successfully', 'Saved')
                     this.router.navigate([`eventos/detalhe/${evento.id}`]);
                 },
@@ -198,6 +196,7 @@ export class EventoDetalheComponent implements OnInit {
                     this.toastr.error("Error when trying to save changes,Error")
                 },
                 () => {
+
                     this.spinner.hide()
                 }
             )
@@ -207,8 +206,7 @@ export class EventoDetalheComponent implements OnInit {
 
 //endregion
 //#region private methods
-    private createBatch(batch: Batch):
-        FormGroup {
+    private createBatch(batch: Batch): FormGroup {
         return this.fb.group({
             id: [batch.id],
             name: [batch.name, Validators.required],
@@ -277,7 +275,6 @@ export class EventoDetalheComponent implements OnInit {
             }
         ).add(() => this.spinner.hide());
     }
-
 
 
 }

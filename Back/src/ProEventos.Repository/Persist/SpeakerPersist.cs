@@ -7,7 +7,7 @@ namespace ProEventos.Persistence.Persist;
 
 public class SpeakerPersist : GeneralPersist, ISpeakerPersist
 {
-    private ProEventosContext _context;
+    private readonly ProEventosContext _context;
 
     public SpeakerPersist(ProEventosContext context) : base(context)
     {
@@ -20,7 +20,7 @@ public class SpeakerPersist : GeneralPersist, ISpeakerPersist
         IQueryable<Speaker> queryable = _context.Speakers.Include(s => s.SocialMedias);
         if (includeEvents)
         {
-            queryable.Include(s => s.EventSpeakers).ThenInclude(es => es.Event);
+            queryable.Include(s => s.Events);
         }
 
         return await queryable.AsNoTracking().ToArrayAsync();
@@ -31,7 +31,7 @@ public class SpeakerPersist : GeneralPersist, ISpeakerPersist
         IQueryable<Speaker> queryable = _context.Speakers.Include(s => s.SocialMedias);
         if (includeEvents)
         {
-            queryable.Include(s => s.EventSpeakers).ThenInclude(es => es.Event);
+            queryable.Include(s => s.Events);
         }
 
         return await queryable.Where(e => e.Id == speakerId).FirstOrDefaultAsync();

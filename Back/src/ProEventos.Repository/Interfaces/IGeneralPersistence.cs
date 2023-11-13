@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace ProEventos.Persistence.Interfaces;
+﻿namespace ProEventos.Persistence.Interfaces;
 
 public interface IGeneralPersist
 {

@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-using ProEventos.Domain;
+﻿using ProEventos.Domain;
 
 namespace ProEventos.Persistence.Interfaces;
 
-public interface IEventPersist
+public interface IEventPersist : IGeneralPersist
 {
     Task<Event[]> GetEventsByThemeAsync(string tema, bool includeSpeaker = false);
     Task<Event[]> GetAllEventsAsync(bool includeSpeaker = false);

@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Diagnostics;
-using ProEventos.Application.Dtos;
+﻿using ProEventos.Application.Dtos;
 
 namespace ProEventos.Application.Interfaces;
 

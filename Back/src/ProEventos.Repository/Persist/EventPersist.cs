@@ -1,15 +1,12 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProEventos.Domain;
 using ProEventos.Persistence.Contexto;
-using ProEventos.Persistence.Interfaces;
 
 namespace ProEventos.Persistence.Persist;
 
-public class EventPersist : IEventPersist
+public class EventPersist
 {
-    private ProEventosContext _context;
+    private readonly ProEventosContext _context;
 
     public EventPersist(ProEventosContext context)
     {
@@ -25,7 +22,7 @@ public class EventPersist : IEventPersist
 
         if (includeSpeaker)
         {
-            query.Include(e => e.SpeakersEvent).ThenInclude(pe => pe.Speaker);
+            query.Include(e => e.Speaker);
         }
 
         query = query.AsNoTracking().OrderBy(e => e.Id).Where(e => e.Theme.ToLower().Contains(tema.ToLower()));
@@ -41,7 +38,7 @@ public class EventPersist : IEventPersist
         query = query.OrderBy(e => e.Id);
         if (includeSpeaker)
         {
-            query.AsNoTracking().Include(e => e.SpeakersEvent).ThenInclude(pe => pe.Speaker);
+            query.AsNoTracking().Include(e => e.Speaker);
         }
 
         return await query.ToArrayAsync();
@@ -52,7 +49,7 @@ public class EventPersist : IEventPersist
         IQueryable<Event> query = _context.Events.Include(e => e.Lots).Include(e => e.SocialMedias);
         if (includeSpeaker)
         {
-            query.AsNoTracking().Include(e => e.SpeakersEvent).ThenInclude(se => se.Speaker);
+            query.AsNoTracking().Include(e => e.Speaker);
         }
 
         return await query.Where(e => e.Id == eventoId).FirstOrDefaultAsync();

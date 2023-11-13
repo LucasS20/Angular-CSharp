@@ -14,9 +14,7 @@ export class EventService {
     }
 
     public getAll(): Observable<Evento[]> {
-        return this.http.get<Evento[]>(this.baseURL).pipe(
-            tap(data => console.log('Eventos recebidos: ', data))
-        );
+        return this.http.get<Evento[]>(this.baseURL);
     }
 
     public getByTheme(theme: string): Observable<Evento[]> {

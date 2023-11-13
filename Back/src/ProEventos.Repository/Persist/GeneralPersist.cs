@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProEventos.Persistence.Contexto;
 using ProEventos.Persistence.Interfaces;
 
@@ -7,7 +6,7 @@ namespace ProEventos.Persistence.Persist;
 
 public class GeneralPersist : IGeneralPersist
 {
-    private ProEventosContext _context;
+    private readonly ProEventosContext _context;
 
     public GeneralPersist(ProEventosContext context)
     {

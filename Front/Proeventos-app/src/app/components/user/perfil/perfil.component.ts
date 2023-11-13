@@ -11,6 +11,7 @@ import {Palestrante} from "../../../models/Palestrante";
 export class PerfilComponent implements OnInit {
 
   public formValue: any = {};
+    speakerId: any;
   constructor(private spinner: NgxSpinnerService) {}
 
   ngOnInit() {

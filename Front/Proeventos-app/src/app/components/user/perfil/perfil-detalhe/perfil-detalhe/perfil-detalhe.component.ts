@@ -32,6 +32,8 @@ export class PerfilDetalheComponent {
     }
 
     private validate() {
+
+        console.log(this.palestrante);
         const formOptions: AbstractControlOptions = {validators: ValidatorPasswordField.MustMatch('password', 'confirmPassword')}
         const specialCharacterPattern = /[\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\]\{\};:\'",<>\.\?\/\\|]/;
         this.form = this.formBuilder.group({
