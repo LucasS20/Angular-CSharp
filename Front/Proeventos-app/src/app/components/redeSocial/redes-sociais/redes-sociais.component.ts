@@ -47,21 +47,20 @@ export class RedesSociaisComponent {
 
     confirmDeleteRedeSocial() {
         this.modalRef.hide();
-        this.spinner.show();
-        this.service.deleteOnSpeaker(this.speakerId, this.redeSocialAtual.id).subscribe(
-            () => {
-
+        this.spinner.show().then();
+        this.service.deleteOnSpeaker(this.speakerId, this.redeSocialAtual.id).subscribe({
+            next: () => {
                 this.toastr.success("Lote deletado com sucesso", "Deletado")
                 this.socialMediaArray.removeAt(this.redeSocialAtual.index);
             },
-            (e) => {
+            error: (e) => {
                 console.error(e)
                 this.toastr.error("Erro ao deletar", "Erro")
             },
-            () => {
+            complete: () => {
             }
-        ).add(() => this.spinner.hide());
-        this.spinner.hide();
+        }).add(() => this.spinner.hide());
+        this.spinner.hide().then();
     }
 
     declineDeleteRedeSocial() {
@@ -96,19 +95,19 @@ export class RedesSociaisComponent {
     private saveOnEvento() {
         if (this.getControls['redesSociais'].valid) {
             this.spinner.show().then();
-            this.service.saveOnEvento(this.eventoId, this.formRS.value['socialMediaArray']).subscribe(
-                () => {
+            this.service.saveOnEvento(this.eventoId, this.formRS.value['socialMediaArray']).subscribe({
+                next: () => {
                     this.toastr.success("Lotes salvos com sucesso!", 'Success!')
                     this.router.navigate([`eventos/detalhe/${this.eventoId}`]).then();
                 },
-                (error: any) => {
+                error: (error: any) => {
                     this.toastr.error("Error ao tentar salvar lotes", 'Error');
                     console.error(error);
                 },
-                () => {
+                complete: () => {
                     this.spinner.hide().then();
                 }
-            ).add(() => this.spinner.hide())
+            }).add(() => this.spinner.hide())
         } else {
             this.toastr.info("Insira o formulário valido", "Ops!!")
         }
@@ -118,18 +117,18 @@ export class RedesSociaisComponent {
         if (this.getControls['redesSociais'].valid) {
             this.spinner.show().then();
 
-            this.service.saveOnSpeaker(this.speakerId, this.formRS.value['redesSociais']).subscribe(
-                () => {
+            this.service.saveOnSpeaker(this.speakerId, this.formRS.value['redesSociais']).subscribe({
+                next: () => {
                     this.toastr.success("Lotes salvos com sucesso!", 'Sucesso!')
                 },
-                (error: any) => {
+                error: (error: any) => {
                     this.toastr.error("Error ao tentar salvar lotes", 'Error');
                     console.error(error);
                 },
-                () => {
-                    this.spinner.hide();
+                complete: () => {
+                    this.spinner.hide().then();
                 }
-            ).add(() => this.spinner.hide())
+            }).add(() => this.spinner.hide().then())
         } else {
             this.toastr.info("Insira o formulário valido", "Ops!!")
         }
@@ -144,32 +143,33 @@ export class RedesSociaisComponent {
     }
 
     private loadBySpeaker() {
-        this.service.getAllByPalestranteId(this.speakerId).subscribe(
-            (socialMedias) => {
+        this.service.getAllByPalestranteId(this.speakerId).subscribe({
+            next: (socialMedias) => {
                 socialMedias.forEach(b => this.socialMediaArray.push(this.createSocialMedia(b)))
-            }
-            ,
-            (error) => {
+            },
+            error: (error) => {
                 console.error(error)
                 this.toastr.error("Erro ao carregar os lotes")
             },
-            () => {
-                this.spinner.hide()
-            },)
+            complete: () => {
+                this.spinner.hide().then()
+            }
+        })
     }
 
     private loadByEvent() {
-        this.service.getAllByEventId(this.eventoId).subscribe(
-            (batches: RedeSocial[]) => {
+        this.service.getAllByEventId(this.eventoId).subscribe({
+            next: (batches: RedeSocial[]) => {
                 batches.forEach(b => this.socialMediaArray.push(this.createSocialMedia(b)))
             },
-            (error) => {
+            error: (error) => {
                 console.error(error)
                 this.toastr.error("Erro ao carregar os lotes")
             },
-            () => {
-                this.spinner.hide()
-            },)
+            complete: () => {
+
+            },
+        })
     }
 
 

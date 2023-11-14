@@ -30,7 +30,7 @@ public class LotService : ILotService
     public async Task<BatchDto[]> Put(int eventId, BatchDto[] models)
     {
         var lotes = _lotPersist.GetLotsByEventId(eventId);
-        var result = lotes.Result;
+        var result = lotes.Result.OrderByDescending(l => l.EndDate);
         if (result == null) return null;
 
         foreach (var model in models)
@@ -71,7 +71,6 @@ public class LotService : ILotService
         var batches = await _lotPersist.GetLotsByEventId(eventId);
         return batches == null ? null : _autoMapper.Map<BatchDto[]>(batches);
     }
-
 
     public async Task<BatchDto> GetLotByIdsAsync(int eventId, int lotId)
     {

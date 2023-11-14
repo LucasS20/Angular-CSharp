@@ -41,20 +41,17 @@
 
     <tr *ngFor="let evento of filteredEvents " (click)="redirectDetalhes(evento.id)" style="cursor: pointer">
       <td class="d-none d-md-table-cell">
-        <img [collapse]=!showImage [isAnimated]="true" src="/assets/{{evento.imgUrl}}"
+        <img [collapse]=!showImage [isAnimated]="true" src="{{evento.base64}}"
              alt=""
              [style.margin.px]="7"
              [style.width.vh]="5"
-             [style.height.vh]="5"
-        >
-
-      </td>
+             [style.height.vh]="5"></td>
       <td>{{evento.id}}</td>
       <td>{{evento.theme}}</td>
       <td class="d-none d-md-table-cell">{{evento.local}}</td>
       <td>{{evento.date}}</td>
       <td class="d-none d-md-table-cell">{{evento.numberOfPeoples}}</td>
-      <td  class="d-none d-md-table-cell">{{evento.lots[0]?.name}}</td>
+      <td class="d-none d-md-table-cell">{{evento.lots[0].name}}</td>
       <td>
 
         <button type="button" class="btn btn-outline-danger btn-sm rounded-0" tooltip="Delete"

@@ -11,7 +11,7 @@ public class EventService : IEventService
     private readonly IEventPersist _eventPersist;
     private readonly IMapper _autoMapper;
 
-    public EventService( IEventPersist eventPersist, IMapper autoMapper)
+    public EventService(IEventPersist eventPersist, IMapper autoMapper)
     {
         _eventPersist = eventPersist;
         _autoMapper = autoMapper;
@@ -40,17 +40,41 @@ public class EventService : IEventService
         }
 
         model.Id = evento.Id;
-        _autoMapper.Map(model, evento);
+        evento.Lots = _autoMapper.Map<Batch[]>(model.Lots);
+        if (!validarLotes(model)) return null;
         _eventPersist.Update(evento);
         if (await _eventPersist.SaveChangesAsync())
         {
-            var eventReturn = await _eventPersist.GetEventByIdAsync(evento.Id);
-            return _autoMapper.Map<EventDto>(eventReturn);
+            return model;
         }
 
-        _eventPersist.Update(model);
-
         return null;
+    }
+//TODO
+    private bool validarLotes(EventDto evento)
+    {
+        evento.Lots = OrdenarPorDatas(evento);
+        var lotes = evento.Lots.ToList();
+        for (var i = 0; i < lotes.Count - 1; i++)
+        {
+            if (lotes[i].StartDate > lotes[i].EndDate)
+            {
+                return false;
+            }
+
+            if (lotes[i].EndDate > lotes[i + 1].StartDate)
+            {
+                return false;
+            }
+        }
+
+        return lotes[^1].EndDate == evento.Date;
+    }
+
+
+    private static List<BatchDto> OrdenarPorDatas(EventDto evento)
+    {
+        return evento.Lots.OrderBy(e => e.StartDate).ToList();
     }
 
     public async Task<bool> Delete(int id)
@@ -99,5 +123,4 @@ public class EventService : IEventService
             throw new Exception(e.Message);
         }
     }
-    
 }

@@ -6,7 +6,7 @@ export interface Evento {
   date?: Date;
   email: string;
   id: number;
-  imgUrl: string;
+  base64: string;
   local: string;
   numberOfPeoples: number;
   phone: string;

@@ -4,7 +4,6 @@ import {ValidatorPasswordField} from "../../../../../helpers/ValidatorPasswordFi
 import {PalestranteService} from "../../../../../services/speaker/palestrante.service";
 import {Palestrante} from "../../../../../models/Palestrante";
 import {ToastrService} from "ngx-toastr";
-import {NgxSpinnerService, Spinner} from "ngx-spinner";
 
 @Component({
     selector: 'app-perfil-detalhe',
@@ -19,8 +18,7 @@ export class PerfilDetalheComponent {
 
     constructor(private formBuilder: FormBuilder,
                 private palestranteService: PalestranteService,
-                private toastr: ToastrService,
-                private spinner: NgxSpinnerService) {
+                private toastr: ToastrService) {
         this.form = {} as FormGroup;
         this.palestrante = {} as Palestrante;
     }
@@ -35,7 +33,7 @@ export class PerfilDetalheComponent {
 
         console.log(this.palestrante);
         const formOptions: AbstractControlOptions = {validators: ValidatorPasswordField.MustMatch('password', 'confirmPassword')}
-        const specialCharacterPattern = /[\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\]\{\};:\'",<>\.\?\/\\|]/;
+        const specialCharacterPattern = /[!@#$%^&*()\-_=+\[\]{};:'",<>.?\/\\|]/;
         this.form = this.formBuilder.group({
             tittle: ['', [Validators.required]],
             firstName: ['', Validators.required],
@@ -59,40 +57,44 @@ export class PerfilDetalheComponent {
             () => {
                 this.changeFormValue.emit({...this.form.value})
             },)
-        this.palestranteService.getById(this.speakerId).subscribe(
-            (speaker: Palestrante) => {
-                this.palestrante = speaker;
+        this.palestranteService.getById(this.speakerId).subscribe({
+            next:
+                (speaker: Palestrante) => {
+                    this.palestrante = speaker;
 
-                const names = speaker.name.split(' ');
-                const firstName = names[0];
-                const secondName = names.slice(1).join(' ');
+                    const names = speaker.name.split(' ');
+                    const firstName = names[0];
+                    const secondName = names.slice(1).join(' ');
 
-                this.form.patchValue({
-                    ...speaker,
-                    firstName: firstName,
-                    secondName: secondName
-                });
-            }, () => {
-            },
-            () => {
-            }
-        )
+                    this.form.patchValue({
+                        ...speaker,
+                        firstName: firstName,
+                        secondName: secondName
+                    });
+                }, error:
+                () => {
+                },
+            complete:
+                () => {
+                }
+        })
     }
 
     saveSpeaker() {
         this.palestrante = this.form.value;
-        this.palestrante.id=this.speakerId;
-        this. palestrante.name = `${this.form.value.firstName} ${this.form.value.secondName}`;
+        this.palestrante.id = this.speakerId;
+        this.palestrante.name = `${this.form.value.firstName} ${this.form.value.secondName}`;
         console.log(this.palestrante);
-        this.palestranteService.update(this.palestrante).subscribe(
-            () => {
+        this.palestranteService.update(this.palestrante).subscribe({
+            next: () => {
                 this.toastr.success("Deu bom")
             },
-            (e) => {
+            error: (e) => {
                 this.toastr.error(e)
                 console.log(e)
             },
-            () => {
-            },)
+            complete: () => {
+            },
+        })
     }
 }

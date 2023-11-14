@@ -19,7 +19,7 @@ public class LotPersist : ILotPersist
     {
         IQueryable<Batch> queryable = _context.Batches;
 
-        queryable = queryable.AsNoTracking().Where(l => l.EventId == eventoId);
+        queryable = queryable.AsNoTracking().Where(l => l.EventId == eventoId).OrderBy(l => l.EndDate);
 
         return await queryable.ToArrayAsync();
     }

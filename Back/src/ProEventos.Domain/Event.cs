@@ -11,7 +11,7 @@ public class Event
     public DateTime Date { get; set; }
     [Required] public string Theme { get; set; }
     public int NumberOfPeoples { get; set; }
-    public string ImgUrl { get; set; }
+    public string Base64 { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
     public IEnumerable<Batch> Lots { get; set; }

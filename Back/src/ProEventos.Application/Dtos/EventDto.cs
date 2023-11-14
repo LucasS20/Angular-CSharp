@@ -6,7 +6,7 @@ public class EventDto
 {
     public int Id { get; set; }
     public string Local { get; set; }
-    public string Date { get; set; }
+    public DateTime Date { get; set; }
 
     [Required(ErrorMessage = "The {0} is required"),
      StringLength(50, MinimumLength = 3, ErrorMessage = "Length should be in the range 3-50")
@@ -16,7 +16,7 @@ public class EventDto
     [Range(1, 120000, ErrorMessage = "Length should be in the range 3-50")]
     public int NumberOfPeoples { get; set; }
 
-    public string ImgUrl { get; set; }
+    public string Base64 { get; set; }
 
     [Required(ErrorMessage = "The {0} is requireD"), Phone(ErrorMessage = "The {0} has a invalid format")]
     public string Phone { get; set; }

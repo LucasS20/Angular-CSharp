@@ -74,7 +74,7 @@ public class EventController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError,  e);
+            return StatusCode(StatusCodes.Status500InternalServerError, e);
         }
     }
 
@@ -107,11 +107,5 @@ public class EventController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError,
                 "Internal error while delete, Error:" + e);
         }
-    }
-
-    [HttpPost("upload-image/{eventId}")]
-    public  Task<IActionResult> UploadImage(int eventoId)
-    {
-        throw new  NotImplementedException();
     }
 }

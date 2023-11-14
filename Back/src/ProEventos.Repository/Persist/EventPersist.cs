@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProEventos.Domain;
 using ProEventos.Persistence.Contexto;
+using ProEventos.Persistence.Interfaces;
 
 namespace ProEventos.Persistence.Persist;
 
-public class EventPersist
+public class EventPersist : GeneralPersist, IEventPersist
 {
     private readonly ProEventosContext _context;
 
-    public EventPersist(ProEventosContext context)
+    public EventPersist(ProEventosContext context) : base(context)
     {
         _context = context;
         _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
