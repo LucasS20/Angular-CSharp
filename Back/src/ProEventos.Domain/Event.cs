@@ -14,7 +14,8 @@ public class Event
     public string Base64 { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
-    public IEnumerable<Batch> Lots { get; set; }
+    public IEnumerable<Batch> Batches { get; set; }
     public IEnumerable<SocialMedia> SocialMedias { get; set; }
     public Speaker Speaker { get; set; }
+    public int SpeakerId { get; set; }
 }

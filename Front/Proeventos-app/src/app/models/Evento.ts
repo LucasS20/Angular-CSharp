@@ -1,6 +1,7 @@
 import {Batch} from "./Batch";
 import {RedeSocial} from "./RedesSociais";
 import {EventSpeaker} from "./EventSpeaker";
+import {Palestrante} from "./Palestrante";
 
 export interface Evento {
   date?: Date;
@@ -11,8 +12,8 @@ export interface Evento {
   numberOfPeoples: number;
   phone: string;
   socialMedias: RedeSocial[];
-  speakersEvent: EventSpeaker[] ;
-  lots: Batch[];
+  speakerId: number;
+  batches: Batch[];
   theme: string;
 }
 

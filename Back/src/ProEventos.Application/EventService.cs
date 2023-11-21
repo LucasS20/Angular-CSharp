@@ -33,16 +33,18 @@ public class EventService : IEventService
 
     public async Task<EventDto> Update(EventDto model, int id)
     {
+
+
         var evento = await _eventPersist.GetEventByIdAsync(id);
         if (evento == null)
         {
             return null;
         }
 
-        model.Id = evento.Id;
-        evento.Lots = _autoMapper.Map<Batch[]>(model.Lots);
-        if (!validarLotes(model)) return null;
-        _eventPersist.Update(evento);
+        var a = _autoMapper.Map(model, evento);
+
+        a.Batches = _autoMapper.Map<IEnumerable<Batch>>(model.Batches);
+        _eventPersist.Update(a);
         if (await _eventPersist.SaveChangesAsync())
         {
             return model;
@@ -50,32 +52,10 @@ public class EventService : IEventService
 
         return null;
     }
-//TODO
-    private bool validarLotes(EventDto evento)
-    {
-        evento.Lots = OrdenarPorDatas(evento);
-        var lotes = evento.Lots.ToList();
-        for (var i = 0; i < lotes.Count - 1; i++)
-        {
-            if (lotes[i].StartDate > lotes[i].EndDate)
-            {
-                return false;
-            }
-
-            if (lotes[i].EndDate > lotes[i + 1].StartDate)
-            {
-                return false;
-            }
-        }
-
-        return lotes[^1].EndDate == evento.Date;
-    }
 
 
-    private static List<BatchDto> OrdenarPorDatas(EventDto evento)
-    {
-        return evento.Lots.OrderBy(e => e.StartDate).ToList();
-    }
+
+    
 
     public async Task<bool> Delete(int id)
     {

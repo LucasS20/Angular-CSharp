@@ -9,5 +9,5 @@ public class Speaker
     public string Phone { get; set; }
     public string Email { get; set; }
     public IEnumerable<SocialMedia> SocialMedias { get; set; }
-    public IEnumerable<Event> Events { get; set; }
+    public List<Event> Events { get; set; }
 }

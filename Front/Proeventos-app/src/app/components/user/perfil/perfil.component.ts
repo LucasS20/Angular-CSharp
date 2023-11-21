@@ -1,31 +1,35 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NgxSpinnerService} from "ngx-spinner";
 import {Palestrante} from "../../../models/Palestrante";
 
 
 @Component({
-  selector: 'app-perfil',
-  templateUrl: './perfil.component.html',
-  styleUrls: ['./perfil.component.scss']
+    selector: 'app-perfil',
+    templateUrl: './perfil.component.html',
+    styleUrls: ['./perfil.component.scss']
 })
 export class PerfilComponent implements OnInit {
 
-  public formValue: any = {};
-    speakerId: any;
-  constructor(private spinner: NgxSpinnerService) {}
+    public formValue: any = {};
+    @Input() speakerId: any;
 
-  ngOnInit() {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 500);
-  }
+    constructor(private spinner: NgxSpinnerService) {
+    }
 
-  public setFormValue($event: any) {
-    this.formValue = $event;
-  }
+    ngOnInit() {
+        this.spinner.show();
+        setTimeout(() => {
+            this.spinner.hide();
+        }, 500);
+    }
 
-  public isSpeaker(): boolean {
-    return this.formValue.userFunction === 'Palestrante'
-  }
+    public setFormValue($event: any) {
+
+        this.formValue = $event;
+        console.log(this.formValue);
+    }
+
+    public isSpeaker(): boolean {
+        return this.formValue.userFunction === 'Palestrante'
+    }
 }

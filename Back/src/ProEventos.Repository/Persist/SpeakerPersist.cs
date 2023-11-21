@@ -15,13 +15,10 @@ public class SpeakerPersist : GeneralPersist, ISpeakerPersist
     }
 
 
-    public async Task<Speaker[]> GetAllSpeakersAsync(bool includeEvents)
+    public async Task<Speaker[]> GetAllSpeakersAsync()
     {
-        IQueryable<Speaker> queryable = _context.Speakers.Include(s => s.SocialMedias);
-        if (includeEvents)
-        {
-            queryable.Include(s => s.Events);
-        }
+        IQueryable<Speaker> queryable = _context.Speakers.Include(s => s.SocialMedias).Include(s => s.Events)
+            .ThenInclude(e => e.Batches);
 
         return await queryable.AsNoTracking().ToArrayAsync();
     }

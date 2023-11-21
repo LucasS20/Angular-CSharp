@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ProEventos.Domain;
 
 namespace ProEventos.Application.Dtos;
 
@@ -25,7 +26,8 @@ public class EventDto
      Required(ErrorMessage = "The {0} is required")]
     public string Email { get; set; }
 
-    public IEnumerable<BatchDto> Lots { get; set; }
+    public IEnumerable<BatchDto> Batches { get; set; }
     public IEnumerable<SocialMediaDto> SocialMedias { get; set; }
-    public IEnumerable<SpeakerDto> SpeakersEvent { get; set; }
+    public Speaker Speaker { get; set; }
+    public int SpeakerId { get; set; }
 }

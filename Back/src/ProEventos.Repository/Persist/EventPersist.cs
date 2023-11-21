@@ -18,7 +18,7 @@ public class EventPersist : GeneralPersist, IEventPersist
     public async Task<Event[]> GetEventsByThemeAsync(string tema, bool includeSpeaker)
     {
         IQueryable<Event> query = _context.Events
-            .Include(e => e.Lots)
+            .Include(e => e.Batches)
             .Include(e => e.SocialMedias);
 
         if (includeSpeaker)
@@ -34,7 +34,7 @@ public class EventPersist : GeneralPersist, IEventPersist
     public async Task<Event[]> GetAllEventsAsync(bool includeSpeaker = false)
     {
         IQueryable<Event> query = _context.Events
-            .Include(e => e.Lots)
+            .Include(e => e.Batches)
             .Include(e => e.SocialMedias);
         query = query.OrderBy(e => e.Id);
         if (includeSpeaker)
@@ -47,7 +47,7 @@ public class EventPersist : GeneralPersist, IEventPersist
 
     public async Task<Event> GetEventByIdAsync(int eventoId, bool includeSpeaker)
     {
-        IQueryable<Event> query = _context.Events.Include(e => e.Lots).Include(e => e.SocialMedias);
+        IQueryable<Event> query = _context.Events.Include(e => e.Batches).Include(e => e.SocialMedias);
         if (includeSpeaker)
         {
             query.AsNoTracking().Include(e => e.Speaker);

@@ -1,5 +1,4 @@
 import {RedeSocial} from "./RedesSociais";
-import {EventSpeaker} from "./EventSpeaker";
 
 
 export interface Palestrante {
@@ -10,6 +9,5 @@ export interface Palestrante {
   phone: string;
   email: string;
   socialMedias: RedeSocial[];
-  eventSpeakers: EventSpeaker;
   eventos: Event[];
 }

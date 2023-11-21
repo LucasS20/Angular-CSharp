@@ -29,12 +29,12 @@
         </button>
       </th>
       <th>#</th>
-      <th>Theme</th>
+      <th>Tema</th>
       <th class="d-none d-md-table-cell">Local</th>
       <th>Data</th>
-      <th class="d-none d-md-table-cell">People Amount</th>
-      <th class="d-none d-md-table-cell">Batch</th>
-      <th>Options</th>
+      <th class="d-none d-md-table-cell">Publico máximo</th>
+      <th class="d-none d-md-table-cell">Lote Atual</th>
+      <th></th>
     </tr>
     </thead>
     <tbody *ngIf="events && events.length" class=" align-middle">
@@ -49,9 +49,9 @@
       <td>{{evento.id}}</td>
       <td>{{evento.theme}}</td>
       <td class="d-none d-md-table-cell">{{evento.local}}</td>
-      <td>{{evento.date}}</td>
+      <td>{{evento.date|dateTimeFormat}}</td>
       <td class="d-none d-md-table-cell">{{evento.numberOfPeoples}}</td>
-      <td class="d-none d-md-table-cell">{{evento.lots[0].name}}</td>
+      <td class="d-none d-md-table-cell">{{loteVigente(evento)}}</td>
       <td>
 
         <button type="button" class="btn btn-outline-danger btn-sm rounded-0" tooltip="Delete"
