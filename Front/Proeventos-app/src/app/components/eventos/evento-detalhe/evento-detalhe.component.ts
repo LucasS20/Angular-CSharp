@@ -16,13 +16,13 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
     styleUrls: ['./evento-detalhe.component.scss']
 })
 export class EventoDetalheComponent implements OnInit {
-    private eventId: number;
-    form: FormGroup
-    event = {base64: '',} as Evento;
+    eventId: number = Math.min();
+    form!: FormGroup
+    event: Evento = {base64: '',} as Evento;
     saveStatus: string = 'post';
     currentBatch = {id: 0, name: '', index: 0};
-    imagemURL = 'assets/uploadCloud.svg';
-    file: File;
+    imagemURL: string = 'assets/uploadCloud.svg';
+    file: File = {} as File;
 
     constructor(private fb: FormBuilder,
                 private localeService: BsLocaleService,
@@ -35,17 +35,14 @@ export class EventoDetalheComponent implements OnInit {
                 private modalRef: BsModalRef,
                 private modalService: BsModalService
     ) {
-        this.file = {} as File;
-        this.eventId = -1;
-        this.form = new FormGroup({})
-        this.localeService.use('pt-br')
+        this.localeService.use('pt-br');
     }
 
     ngOnInit() {
         this.loadEvent();
-        this.validation();
+        this.initForm();
         this.editMode ? null : this.addBatch();
-        this.setLastBatchEndDateReadOnly();
+
     }
 
 //#region Gets
@@ -73,21 +70,6 @@ export class EventoDetalheComponent implements OnInit {
 
 //endregion
 
-    private validation() {
-        this.form = this.fb.group({
-            date: ['', [Validators.required, Validators.minLength(3)]],
-            theme: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
-            local: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(80)]],
-            numberOfPeoples: ['', [
-                Validators.required,
-                Validators.min(2),
-                Validators.max(120000)
-            ]],
-            phone: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
-            batches: this.fb.array([])
-        })
-    }
 
 //#region Batches
     public addBatch(): void {
@@ -96,18 +78,19 @@ export class EventoDetalheComponent implements OnInit {
 
 
     public loadBatches() {
-        this.batchService.getByEventId(this.eventId).subscribe(
-            (batches: Batch[]) => {
+        this.batchService.getByEventId(this.eventId).subscribe({
+            next: (batches: Batch[]) => {
                 console.log(batches);
                 batches.forEach(b => this.batches.push(this.createBatch(b)))
             },
-            (error) => {
+            error: (error) => {
                 console.error(error)
                 this.toastr.error("Erro ao carregar os lotes")
             },
-            () => {
-                this.spinner.hide()
-            },)
+            complete: () => {
+                this.spinner.hide().then()
+            }
+        })
     }
 
     public deleteBatch(template: TemplateRef<any>, index: number) {
@@ -126,9 +109,9 @@ export class EventoDetalheComponent implements OnInit {
         this.eventId = this.activatedRoute.snapshot.paramMap ? +this.activatedRoute.snapshot?.paramMap.get('id') : -1;
         if (this.eventId !== null && this.eventId !== 0) {
             this.saveStatus = 'put'
-            this.spinner.show()
-            this.eventService.getById(this.eventId).subscribe(
-                (event: Evento) => {
+            this.spinner.show().then()
+            this.eventService.getById(this.eventId).subscribe({
+                next: (event: Evento) => {
 
                     this.event = {...event}
 
@@ -136,50 +119,47 @@ export class EventoDetalheComponent implements OnInit {
 
                     this.loadBatches();
                 },
-                (error: any) => {
+                error: (error: any) => {
                     console.error(error)
                     this.toastr.error("Error while trying to load the events", "ERROR")
-                    this.spinner.hide();
+                    this.spinner.hide().then();
                 },
-                () => {
-                    this.spinner.hide()
+                complete: () => {
+                    this.spinner.hide().then()
                 }
-            );
+            });
         }
     }
 
     public saveEvent() {
-
         if (this.form.valid) {
-            let foto = this.event.base64;
+            const foto = this.event.base64;
+            const socialMedias = this.event.socialMedias;
             if (this.saveStatus === 'post') {
                 this.event = {...this.form.value}
-                this.event.speakerId = 1;
-                this.event.batches = this.form.value['batches'];
-                this.initRequiredFields();
+                console.log(this.event);
+                this.event.socialMedias = []
             } else {
-                let sm = this.event.socialMedias;
                 this.event = {id: this.event.id, ...this.form.value};
-                this.event.batches = this.form.value['batches']
-                this.event.speakerId = 1;
-                this.event.socialMedias = sm
+                this.event.socialMedias = socialMedias
             }
+            this.event.batches = this.form.value['batches']
+            this.event.speakerId = 1;
             this.event.base64 = foto;
 
             // @ts-ignore
             this.eventService[this.saveStatus](this.event).subscribe(
-                (evento: Evento) => {
+                (evento:Evento) => {
                     this.toastr.success('Event saved successfully', 'Saved')
-                    this.router.navigate([`eventos/detalhe/${this.event.id}`]);
+                    this.router.navigate([`eventos/detalhe/${evento.id}`]).then();
                 },
-                (error: any) => {
-                    this.spinner.hide()
+                (error:any) => {
+                    this.spinner.hide().then()
                     console.error(error);
                     this.toastr.info(error.error, "Error")
                 },
                 () => {
-
-                    this.spinner.hide()
+                    this.spinner.hide().then()
                 }
             )
 
@@ -199,34 +179,46 @@ export class EventoDetalheComponent implements OnInit {
         })
     }
 
-    private initRequiredFields() {
-        this.event.speakerId = 1;
-        this.event.socialMedias = []
+
+    private initForm() {
+        this.form = this.fb.group({
+            date: ['', [Validators.required, Validators.minLength(3)]],
+            theme: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+            local: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(80)]],
+            numberOfPeoples: ['', [
+                Validators.required,
+                Validators.min(2),
+                Validators.max(120000)
+            ]],
+            phone: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
+            batches: this.fb.array([])
+        })
     }
 
-//endregion
+    //endregion
 
-    decline() {
+    modalDecline() {
         this.modalRef.hide();
     }
 
-    confirm() {
+    modalConfirm() {
         if (this.form.value['batches'].length > 1) {
             this.modalRef.hide();
-            this.spinner.show();
-            this.batchService.delete(this.eventId, this.currentBatch.id).subscribe(
-                () => {
+            this.spinner.show().then();
+            this.batchService.delete(this.eventId, this.currentBatch.id).subscribe({
+                next: () => {
                     this.toastr.success("Lote deletado com sucesso", "Deletado")
                     this.batches.removeAt(this.currentBatch.index);
                 },
-                (e) => {
+                error: (e) => {
                     console.error(e)
                     this.toastr.error("Erro ao deletar", "Erro")
                 },
-                () => {
+                complete: () => {
                 }
-            ).add(() => this.spinner.hide());
-            this.spinner.hide();
+            }).add(() => this.spinner.hide());
+            this.spinner.hide().then();
         } else {
             this.modalRef.hide();
             this.toastr.info("O evento deve possuir no menos UM lote", "Não foi possivel deletar")
@@ -235,29 +227,16 @@ export class EventoDetalheComponent implements OnInit {
 
     onFileChange(evento: any) {
         const reader = new FileReader();
-
         reader.onload = (evento: any) => {
             this.imagemURL = evento.target.result;
             this.event.base64 = evento.target.result;
         };
         const file = evento.target.files[0];
-
         if (file) {
             this.file = file;
             reader.readAsDataURL(this.file);
         }
     }
-    private setLastBatchEndDateReadOnly() {
-        this.form.get('date')?.valueChanges.subscribe((date: Date) => {
-            const batches = this.form.get('batches') as FormArray;
-            if (batches.length > 0) {
-                const lastBatchEndDateControl = batches.at(batches.length - 1).get('endDate');
-                if (lastBatchEndDateControl) {
-                    lastBatchEndDateControl.setValue(date);
-                    lastBatchEndDateControl.disable();
-                }
-            }
-        });
-    }
+
 
 }

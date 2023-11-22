@@ -61,7 +61,7 @@ public class SpeakerService : ISpeakerService
 
     public async Task<SpeakerDto> GetById(int speakerId)
     {
-        var speaker = await _speakerPersist.GetSpeakerByIdAsync(speakerId);
+        Speaker speaker = await _speakerPersist.GetSpeakerByIdAsync(speakerId);
         if (speaker == null)
         {
             throw new Exception($"Cant find a speaker with id: {speakerId}");

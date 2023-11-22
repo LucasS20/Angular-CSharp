@@ -5,5 +5,5 @@ namespace ProEventos.Persistence.Interfaces;
 public interface ISpeakerPersist : IGeneralPersist
 {
     Task<Speaker[]> GetAllSpeakersAsync();
-    Task<Speaker> GetSpeakerByIdAsync(int speakerId, bool includeEvents = true);
+    Task<Speaker> GetSpeakerByIdAsync(int speakerId);
 }

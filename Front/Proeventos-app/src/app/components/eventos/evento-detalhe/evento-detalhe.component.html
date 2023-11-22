@@ -46,7 +46,7 @@
                             <input type="text" class="form-control " formControlName="date" placeholder=""
                                    [ngClass]="cssValidator(getControls?.date)" bsDatepicker
                                    value="{{event.date |dateTimeFormat}}"
-                                   [bsConfig]=" bsConfig" [(ngModel)]="event.date">
+                                   [bsConfig]=" bsConfig">
                             <div class="invalid-feedback">Data e Hora é Obrigatório</div>
                         </div>
                     </div>
@@ -117,8 +117,8 @@
                 </div>
                 <p>Clique em Lote para adicionar e preencher novos Lotes</p>
                 <h3 style="color:darkorange"> Regras Importantes</h3>
-                <p> As datas de inicio devem ser sempre menores que as de fim</p>
-                <p> A data de fim do ultimo lote <span style="color:red; font-weight: bold">SEMPRE</span> será igual a data do evento</p>
+                <p> As datas de inicio devem ser menores que as de fim</p>
+                <p> A data de fim do ultimo lote <span style="color:red; font-weight: bold">SEMPRE</span> será definida para a data que o evento acontecerá</p>
                 <p> A data de inicio de um lote não pode ser menor que a data de fim do lote anterior!</p>
                 <div class="form-row p-1 my-2">
                     <div class="col" [formGroup]="form">
@@ -168,6 +168,7 @@
                                         <input type="text" class="form-control" placeholder="01/01/2019"
                                                formControlName="endDate" bsDatepicker [bsConfig]="bsConfig">
                                     </div>
+
                                 </div>
                             </fieldset>
                         </div>
@@ -199,7 +200,7 @@
             </div>
             <div class="card profile-card-2 rounded-0">
                 <div class="card-img-block" style="display: flex; justify-content: center;">
-                    <img [src]="event.base64===null?imagemURL:event.base64 " class="img-fluid w-50 h-50"
+                    <img [src]="event.base64===''?imagemURL:event.base64 " class="img-fluid w-50 h-50"
                          alt="Card image cap" tooltip="Upload de Nova Imagem" [adaptivePosition]="false"
                          placement="bottom"
                          (click)="file.click()"/>
@@ -245,8 +246,8 @@
 <ng-template #template>
     <div class="modal-body text-center">
         <p>Do you want to Delete the Batch? <span style="font-weight: bold">{{this.currentBatch.name}}</span></p>
-        <button type="button" class="btn btn-default" (click)="confirm()">Yes</button>
-        <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+        <button type="button" class="btn btn-default" (click)="modalConfirm()">Yes</button>
+        <button type="button" class="btn btn-primary" (click)="modalDecline()">No</button>
     </div>
 
 </ng-template>

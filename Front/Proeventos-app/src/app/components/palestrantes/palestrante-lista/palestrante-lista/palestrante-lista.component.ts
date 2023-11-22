@@ -37,10 +37,10 @@ export class PalestranteListaComponent {
 
     public loadSpeakers(): void {
         this.service.getAll().subscribe({
-                next: (speakers: Palestrante[]) => {
-                    console.log(speakers);
-                    this.speakers = speakers;
-                    this.filteredSpeakers = speakers;
+                next: (palestrantes: Palestrante[]) => {
+                    console.log(palestrantes);
+                    this.speakers = palestrantes;
+                    this.filteredSpeakers = palestrantes;
                 },
                 error: (error: any) => {
                     console.log(error)

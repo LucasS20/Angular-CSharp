@@ -9,5 +9,5 @@ export interface Palestrante {
   phone: string;
   email: string;
   socialMedias: RedeSocial[];
-  eventos: Event[];
+  events: Event[];
 }

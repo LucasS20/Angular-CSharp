@@ -36,6 +36,7 @@ import { PerfilDetalheComponent } from './components/user/perfil/perfil-detalhe/
 import { PalestranteListaComponent } from './components/palestrantes/palestrante-lista/palestrante-lista/palestrante-lista.component';
 import { PalestranteDetalheComponent } from './components/palestrantes/palestrante-detalhe/palestrante-detalhe.component';
 import { RedesSociaisComponent } from './components/redeSocial/redes-sociais/redes-sociais.component';
+import { PipeFormatSemHoraPipe } from './helpers/pipe-format-sem-hora.pipe';
 
 defineLocale('pt-br', ptBrLocale)
 
@@ -59,6 +60,7 @@ defineLocale('pt-br', ptBrLocale)
     PalestranteListaComponent,
     PalestranteDetalheComponent,
     RedesSociaisComponent,
+    PipeFormatSemHoraPipe,
   ],
   imports: [
     BrowserModule,

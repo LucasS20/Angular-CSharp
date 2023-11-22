@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ProEventos.Application.Dtos;
+using ProEventos.Application.Exceptions;
 using ProEventos.Application.Interfaces;
 
 namespace Proeventos.Controllers;
@@ -68,79 +69,23 @@ public class EventController : ControllerBase
     {
         try
         {
-            if (!ValidaLotes(eventModel))
-            {
-                return BadRequest("Invalid batches dates");
-            }
-
-            if (!ValidaPreco(eventModel))
-            {
-                return BadRequest("Invalid batches prices");
-            }
-
             var evento = await _iEventService.Add(eventModel);
             if (evento == null) return NoContent();
             return Ok(evento);
+        }
+
+        catch (PrecoInvalidoException e)
+        {
+            return BadRequest(e);
+        }
+        catch (LoteDataInvalidaException e)
+        {
+            return BadRequest(e);
         }
         catch (Exception e)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, e);
         }
-    }
-
-    private bool ValidaPreco(EventDto eventModel)
-    {
-        var listaLotes = eventModel.Batches.ToList();
-        for (var i = 0; i < listaLotes.Count - 1; i++)
-        {
-            var precoAtual = listaLotes[i].Price;
-            var proximoPreco = listaLotes[i + 1].Price;
-            if (!(precoAtual < proximoPreco))
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private bool ValidaLotes(EventDto evento)
-    {
-        var listaDeLotes = evento.Batches.ToList();
-        listaDeLotes = DefineHorasParaMeiaNoite(listaDeLotes);
-        for (var i = 0; i < listaDeLotes.Count - 1; i++)
-        {
-            if (!DataInicialMenorQueFinal(listaDeLotes[i])) continue;
-            var loteAtual = listaDeLotes[i];
-            var proximoLote = listaDeLotes[i + 1];
-            if (!DataFinalAtualMenorQueDataInicialProximo(loteAtual, proximoLote))
-            {
-                return false;
-            }
-        }
-
-        return DataInicialMenorQueFinal(listaDeLotes[^1]);
-    }
-
-    private static List<BatchDto> DefineHorasParaMeiaNoite(List<BatchDto> listaDeLotes)
-    {
-        foreach (var lote in listaDeLotes)
-        {
-            lote.StartDate = lote.StartDate.Date;
-            lote.EndDate = lote.EndDate.Date.AddMinutes(1);
-        }
-
-        return listaDeLotes;
-    }
-
-    private bool DataFinalAtualMenorQueDataInicialProximo(BatchDto loteAtual, BatchDto proximoLote)
-    {
-        return loteAtual.EndDate < proximoLote.StartDate;
-    }
-
-    private static bool DataInicialMenorQueFinal(BatchDto batch)
-    {
-        return batch.StartDate < batch.EndDate;
     }
 
 
@@ -149,23 +94,21 @@ public class EventController : ControllerBase
     {
         try
         {
-            if (!ValidaLotes(model))
-            {
-                return BadRequest("Confira a data dos Lotes");
-            }
-
-            if (!ValidaPreco(model))
-            {
-                return BadRequest("Um Lote sempre deve ser mais caro que o anterior");
-            }
-
             var evento = await _iEventService.Update(model, id);
             if (evento == null) return NoContent();
             return Ok(evento);
         }
+        catch (PrecoInvalidoException e)
+        {
+            return BadRequest(e.Message);
+        }
+        catch (LoteDataInvalidaException e)
+        {
+            return BadRequest(e.Message);
+        }
         catch (Exception e)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, e);
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
         }
     }
 

@@ -41,7 +41,7 @@
 
     <tr *ngFor="let evento of filteredEvents " (click)="redirectDetalhes(evento.id)" style="cursor: pointer">
       <td class="d-none d-md-table-cell">
-        <img [collapse]=!showImage [isAnimated]="true" src="{{evento.base64}}"
+        <img [collapse]=!showImage [isAnimated]="true" src="{{evento.base64!==''? evento.base64: '/assets/signup.svg'}}"
              alt=""
              [style.margin.px]="7"
              [style.width.vh]="5"
@@ -53,7 +53,6 @@
       <td class="d-none d-md-table-cell">{{evento.numberOfPeoples}}</td>
       <td class="d-none d-md-table-cell">{{loteVigente(evento)}}</td>
       <td>
-
         <button type="button" class="btn btn-outline-danger btn-sm rounded-0" tooltip="Delete"
                 (click)="openModal($event, template, evento.id)"><i class="fa fa-trash"></i></button>
 

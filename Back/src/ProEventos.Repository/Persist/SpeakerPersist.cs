@@ -23,13 +23,9 @@ public class SpeakerPersist : GeneralPersist, ISpeakerPersist
         return await queryable.AsNoTracking().ToArrayAsync();
     }
 
-    public async Task<Speaker> GetSpeakerByIdAsync(int speakerId, bool includeEvents = false)
+    public async Task<Speaker> GetSpeakerByIdAsync(int speakerId)
     {
-        IQueryable<Speaker> queryable = _context.Speakers.Include(s => s.SocialMedias);
-        if (includeEvents)
-        {
-            queryable.Include(s => s.Events);
-        }
+        IQueryable<Speaker> queryable = _context.Speakers.Include(s => s.SocialMedias).Include(s => s.Events);;
 
         return await queryable.Where(e => e.Id == speakerId).FirstOrDefaultAsync();
     }

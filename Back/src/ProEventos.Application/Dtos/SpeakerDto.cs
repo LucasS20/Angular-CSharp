@@ -9,5 +9,5 @@ public class SpeakerDto
     public string Phone { get; set; }
     public string Email { get; set; }
     public IEnumerable<SocialMediaDto> SocialMedias { get; set; }
-    public IEnumerable<EventDto> Events { get; set; }
+    public List<EventDto> Events { get; set; }
 }
