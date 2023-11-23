@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using ProEventos.Application.Dtos;
 using ProEventos.Application.Exceptions;
 using ProEventos.Application.Interfaces;
+using Proeventos.Extentions;
+using ProEventos.Persistence.Paginacao;
 
 namespace Proeventos.Controllers;
 
@@ -17,12 +19,14 @@ public class EventController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllEvents()
+    public async Task<IActionResult> GetAllEvents([FromQuery] PageParams pageParams)
     {
         try
         {
-            var eventos = await _iEventService.GetAllEventsAsync(true);
+            var eventos = await _iEventService.GetAllEventsAsync(pageParams);
             if (eventos == null) return NoContent();
+            
+            Response.AddPagination(eventos.CurrentPage,eventos.PageSize,eventos.TotalCount,eventos.TotalPages);
             return Ok(eventos);
         }
         catch (Exception e)
@@ -48,21 +52,6 @@ public class EventController : ControllerBase
         }
     }
 
-    [HttpGet("theme/{theme}")]
-    public async Task<IActionResult> GetByTheme(string theme)
-    {
-        try
-        {
-            var evento = await _iEventService.GetEventsByThemeAsync(theme, true);
-            if (evento == null) return NoContent();
-            return Ok(evento);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                "Error when tryng to get event by ID. Error: " + e);
-        }
-    }
 
     [HttpPost]
     public async Task<IActionResult> Post(EventDto eventModel)

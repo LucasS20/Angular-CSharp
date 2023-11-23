@@ -63,6 +63,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\" />
     <Folder Include="obj\Debug\net6.0\staticwebassets\" />
     <Folder Include="resources\" />
   </ItemGroup>

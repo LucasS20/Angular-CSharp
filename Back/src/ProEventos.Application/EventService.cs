@@ -4,6 +4,7 @@ using ProEventos.Application.Exceptions;
 using ProEventos.Application.Interfaces;
 using ProEventos.Domain;
 using ProEventos.Persistence.Interfaces;
+using ProEventos.Persistence.Paginacao;
 
 namespace ProEventos.Application;
 
@@ -68,21 +69,18 @@ public class EventService : IEventService
         return await _eventPersist.SaveChangesAsync();
     }
 
-    public async Task<EventDto[]> GetEventsByThemeAsync(string theme, bool includeSpeaker = false)
-    {
-        var events = await _eventPersist.GetEventsByThemeAsync(theme, includeSpeaker);
-        if (events.Length < 1) return null;
-        var results = _autoMapper.Map<EventDto[]>(events);
-        return results;
-    }
 
-    public async Task<EventDto[]> GetAllEventsAsync(bool includeSpeaker = false)
+    public async Task<PageList<EventDto>> GetAllEventsAsync(PageParams pageParams)
     {
         try
         {
-            var events = await _eventPersist.GetAllEventsAsync(includeSpeaker);
-            var result = _autoMapper.Map<EventDto[]>(events);
-
+            var events = await _eventPersist.GetAllEventsAsync(pageParams);
+            var result = _autoMapper.Map<PageList<EventDto>>(events);
+            result.CurrentPage = events.CurrentPage;
+            result.TotalPages = events.TotalPages;
+            result.TotalCount = events.TotalCount;
+            result.PageSize = events.PageSize;
+            
             return result;
         }
         catch (Exception e)
@@ -127,7 +125,9 @@ public class EventService : IEventService
         {
             var loteAtual = listaDeLotes[i];
             var proximoLote = listaDeLotes[i + 1];
-            if (!DataInicialMenorQueFinal(listaDeLotes[i])) throw new LoteDataInvalidaException($"A data de inicio do lote {loteAtual.Name} é maior do que a data de fim");
+            if (!DataInicialMenorQueFinal(listaDeLotes[i]))
+                throw new LoteDataInvalidaException(
+                    $"A data de inicio do lote {loteAtual.Name} é maior do que a data de fim");
             if (!DataFinalAtualMenorQueDataInicialProximo(loteAtual, proximoLote))
             {
                 throw new LoteDataInvalidaException(
@@ -150,7 +150,8 @@ public class EventService : IEventService
             var proximoPreco = listaLotes[i + 1].Price;
             if (!(precoAtual < proximoPreco))
             {
-                throw new PrecoInvalidoException($"O preço do lote {i + 1} tem que ser menor  do que o do lote {i + 2}.");
+                throw new PrecoInvalidoException(
+                    $"O preço do lote {i + 1} tem que ser menor  do que o do lote {i + 2}.");
             }
         }
     }

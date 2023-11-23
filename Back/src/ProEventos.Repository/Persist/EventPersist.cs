@@ -2,6 +2,7 @@
 using ProEventos.Domain;
 using ProEventos.Persistence.Contexto;
 using ProEventos.Persistence.Interfaces;
+using ProEventos.Persistence.Paginacao;
 
 namespace ProEventos.Persistence.Persist;
 
@@ -15,34 +16,16 @@ public class EventPersist : GeneralPersist, IEventPersist
         _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
 
-    public async Task<Event[]> GetEventsByThemeAsync(string tema, bool includeSpeaker)
+
+    public async Task<PageList<Event>> GetAllEventsAsync(PageParams pageParams)
     {
         IQueryable<Event> query = _context.Events
             .Include(e => e.Batches)
-            .Include(e => e.SocialMedias);
+            .Include(e => e.SocialMedias)
+            .Include(e => e.Speaker);
 
-        if (includeSpeaker)
-        {
-            query.Include(e => e.Speaker);
-        }
-
-        query = query.AsNoTracking().OrderBy(e => e.Id).Where(e => e.Theme.ToLower().Contains(tema.ToLower()));
-
-        return await query.ToArrayAsync();
-    }
-
-    public async Task<Event[]> GetAllEventsAsync(bool includeSpeaker = false)
-    {
-        IQueryable<Event> query = _context.Events
-            .Include(e => e.Batches)
-            .Include(e => e.SocialMedias);
-        query = query.OrderBy(e => e.Id);
-        if (includeSpeaker)
-        {
-            query.AsNoTracking().Include(e => e.Speaker);
-        }
-
-        return await query.ToArrayAsync();
+        query = query.AsNoTracking().Where(e => e.Theme.ToLower().Contains(pageParams.Theme.ToLower()));
+        return await PageList<Event>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
     }
 
     public async Task<Event> GetEventByIdAsync(int eventoId, bool includeSpeaker)

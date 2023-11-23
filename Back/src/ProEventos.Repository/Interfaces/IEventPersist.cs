@@ -1,10 +1,10 @@
 ﻿using ProEventos.Domain;
+using ProEventos.Persistence.Paginacao;
 
 namespace ProEventos.Persistence.Interfaces;
 
 public interface IEventPersist : IGeneralPersist
 {
-    Task<Event[]> GetEventsByThemeAsync(string tema, bool includeSpeaker = false);
-    Task<Event[]> GetAllEventsAsync(bool includeSpeaker = false);
+    Task<PageList<Event>> GetAllEventsAsync( PageParams pageParams);
     Task<Event> GetEventByIdAsync(int eventoId, bool includeSpeaker = false);
 }
