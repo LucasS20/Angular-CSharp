@@ -37,6 +37,7 @@ import { PalestranteListaComponent } from './components/palestrantes/palestrante
 import { PalestranteDetalheComponent } from './components/palestrantes/palestrante-detalhe/palestrante-detalhe.component';
 import { RedesSociaisComponent } from './components/redeSocial/redes-sociais/redes-sociais.component';
 import { PipeFormatSemHoraPipe } from './helpers/pipe-format-sem-hora.pipe';
+import {PaginationModule} from "ngx-bootstrap/pagination";
 
 defineLocale('pt-br', ptBrLocale)
 
@@ -81,6 +82,7 @@ defineLocale('pt-br', ptBrLocale)
         progressBar: true,
       }
     ),
+    PaginationModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgxSpinnerModule.forRoot({type: 'ball-scale-multiple'}),
     ReactiveFormsModule, NgxCurrencyDirective

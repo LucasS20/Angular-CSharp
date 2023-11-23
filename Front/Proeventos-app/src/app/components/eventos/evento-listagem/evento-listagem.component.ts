@@ -5,6 +5,8 @@ import {NgxSpinnerService} from "ngx-spinner";
 import {EventService} from "../../../services/event/event.service";
 import {Evento} from "../../../models/Evento";
 import {Router} from "@angular/router";
+import {PageChangedEvent} from "ngx-bootstrap/pagination";
+import {Pagination, PaginationResult} from "../../../models/Pagination";
 
 
 @Component({
@@ -15,11 +17,11 @@ import {Router} from "@angular/router";
 export class EventoListagemComponent implements OnInit {
     modalRef?: BsModalRef;
     events: Evento[] = []
-
     showImage: boolean = true;
     filteredEvents: Evento[] = [];
     _listFilter: string = '';
     eventoId: number = 0;
+    pagination: Pagination = {} as Pagination
 
     constructor(private service: EventService,
                 private modalService: BsModalService,
@@ -43,6 +45,7 @@ export class EventoListagemComponent implements OnInit {
     }
 
     public ngOnInit(): void {
+        this.pagination = {currentPage: 1, itemsPerPage: 3, totalItems: 1} as Pagination
         this.spinner.show();
 
         setTimeout(() => {
@@ -50,13 +53,17 @@ export class EventoListagemComponent implements OnInit {
         }, 500);
 
         this.loadEvents()
+        // console.log(this.pagination);
     }
 
     public loadEvents(): void {
         const observer = {
-            next: (_events: Evento[]) => {
-                this.events = _events;
-                this.filteredEvents = _events;
+            next: (response: PaginationResult<Evento[]>) => {
+                this.events = response.result;
+                this.filteredEvents = response.result;
+
+                this.pagination=response.pagination
+                // console.log(this.pagination)
             },
             error: (error: any) => {
                 console.log(error)
@@ -65,7 +72,13 @@ export class EventoListagemComponent implements OnInit {
             complete: () => {
             }
         };
-        this.service.getAll().subscribe(observer).add(() => this.spinner.hide())
+
+        this.service.getAll(this.pagination.currentPage, this.pagination.itemsPerPage).subscribe(observer).add(() => this.spinner.hide())
+    }
+
+    pageChanged(event: PageChangedEvent) {
+        this.pagination.currentPage = event.page;
+        this.loadEvents();
     }
 
     public changeState() {
@@ -109,5 +122,6 @@ export class EventoListagemComponent implements OnInit {
 
         return loteVigente ? loteVigente.name : 'Nenhum lote aberto';
     }
+
 
 }
